@@ -6,26 +6,36 @@
 //  Copyright (c) 2016 Michael Sylva. All rights reserved.
 //
 
+/*TODO
+
+- When tiles are taken off the shelf, make it a translation at first, so thats its not immediately up to gravity
+- Need to totally restructure the shelf system, it is a dynamic sizing array so if you take one off the middle it wont respond correctly
+- Double clicking will move the tile up and back down really fast
+ 
+*/
 import SpriteKit
 import CoreMotion
 
 var cat = "Sports"
 var subcat = "Hockey"
 
+var shelf = [Tile]()//creates an array, length 7, of all " "
 var tiles = [Tile]()
 var motionManager = CMMotionManager()
 
 class Tile{
     var sprite : SKSpriteNode
+    var isDocked : Bool
     
-    init(sprite: SKSpriteNode){
+    init(sprite: SKSpriteNode, isDocked: Bool){
         self.sprite = sprite
+        self.isDocked = isDocked
     }
 }
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
+        /* startup function */
         
         self.size = view.bounds.size //set the size to the view size
         
@@ -37,7 +47,12 @@ class GameScene: SKScene {
             }
         }
         
-        /* startup function */
+        let shelfBase = SKLabelNode(text: "__  __  __  __  __  __  __")
+        shelfBase.fontColor = UIColor.blackColor()
+        shelfBase.fontSize = 30
+        shelfBase.position = CGPointMake(CGFloat(self.size.width/2), CGFloat(self.size.height/2))
+        addChild(shelfBase)
+        
         setupScene()
     }
     
@@ -48,7 +63,13 @@ class GameScene: SKScene {
         let touchedNode = self.nodeAtPoint(positionInScene)
         for t in tiles{
             if(touchedNode.isEqualToNode(t.sprite)){
-                print("touched.")
+                if(t.isDocked){
+                    remFromShelf(t)
+                }else{
+                    if(shelf.count<7){ // make sure shelf is not full
+                        addToShelf(t)
+                    }
+                }
             }
         }
     }
@@ -67,24 +88,62 @@ class GameScene: SKScene {
         sprite.physicsBody?.dynamic = true
         self.addChild(sprite)
         
-        let t = Tile(sprite:sprite)
+        let t = Tile(sprite:sprite,isDocked: false)
         tiles.append(t)
         return t
     }
     
     func setupScene(){
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
+        let rect : CGRect = CGRect(x: 0, y: 0, width: frame.width, height: frame.height/2)
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
         
         self.backgroundColor = UIColor.whiteColor()
         
-        let labelText = cat + "  >  " + subcat
+        let labelText = cat + " > " + subcat
         let catLabel = SKLabelNode(text: labelText)
         catLabel.fontColor=UIColor.blackColor()
         
         let length : CGFloat = CGFloat(labelText.characters.count)
         catLabel.position = CGPointMake((length+45)*2, frame.size.height-30)
         addChild(catLabel)
+    }
+    
+    //Shelf functions
+    func addToShelf(t : Tile){
+        shelf.append(t) //add to end of array
+        let pos = shelf.indexOf{$0===t} //Gets position of the letter in the array
+        var start : CGPoint = CGPointMake((view?.bounds.width)!/7-5,(view?.bounds.height)!/2+20)
+        start.x+=CGFloat((pos)!*46) //20 is that difference between underlines?
+        
+        /* Total transformations to add to the shelf */
+        let scaleUp = SKAction.scaleTo(1.3, duration: 0.2)
+        let translate = SKAction.moveTo(start, duration: 0.4)
+        let rotation = SKAction.rotateToAngle(0, duration: 0.4)
+        let transformation = SKAction.group([translate,rotation])
+        let scaleDown = SKAction.scaleTo(1, duration: 0.1)
+        
+        t.sprite.physicsBody?.affectedByGravity = false
+        t.sprite.physicsBody?.dynamic = false
+        t.sprite.physicsBody = nil
+        
+        t.sprite.runAction(SKAction.sequence([scaleUp,transformation,scaleDown]))
+        
+        t.isDocked = true
+    }
+    
+    func remFromShelf(t : Tile){
+        let pos = shelf.indexOf{$0===t}
+        shelf.removeAtIndex(pos!)
+        let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-75)
+        
+        let translate = SKAction.moveTo(target, duration: 1.2)
+        t.sprite.runAction(translate)
+        
+        t.isDocked = false
+        t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
+        t.sprite.physicsBody?.affectedByGravity = true;
+        t.sprite.physicsBody?.dynamic = true;
     }
 }

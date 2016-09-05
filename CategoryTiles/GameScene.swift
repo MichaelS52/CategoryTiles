@@ -27,6 +27,7 @@ class GameScene: SKScene {
         
         self.size = view.bounds.size //set the size to the view size
         
+        /* Create a few test tiles */
         let t = createTile("x")
         
         let t2 = createTile("x")
@@ -36,14 +37,13 @@ class GameScene: SKScene {
         t3.sprite.position.x-=50
         t3.sprite.position.y+=20
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
-        self.physicsBody?.restitution=0.25 //adds slight bounciness
-        
-        motionManager.startAccelerometerUpdates()
+        /* startup function */
+        setupScene()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-      
+        /* Called when a touch is began */
+        
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -63,5 +63,11 @@ class GameScene: SKScene {
         let t = Tile(sprite:sprite)
         tiles.append(t)
         return t
+    }
+    
+    func setupScene(){
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
+        self.physicsBody?.restitution=0.25 //adds slight bounciness
+        motionManager.startAccelerometerUpdates()
     }
 }

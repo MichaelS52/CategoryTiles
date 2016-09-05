@@ -11,7 +11,6 @@ import CoreMotion
 
 var tiles = [Tile]()
 var motionManager = CMMotionManager()
-var destX:CGFloat = 0.0
 
 class Tile{
     var sprite : SKSpriteNode

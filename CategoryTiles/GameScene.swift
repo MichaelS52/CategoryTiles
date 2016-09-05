@@ -9,6 +9,9 @@
 import SpriteKit
 import CoreMotion
 
+var cat = "Sports"
+var subcat = "Hockey"
+
 var tiles = [Tile]()
 var motionManager = CMMotionManager()
 
@@ -27,14 +30,12 @@ class GameScene: SKScene {
         self.size = view.bounds.size //set the size to the view size
         
         /* Create a few test tiles */
-        let t = createTile("x")
-        
-        let t2 = createTile("x")
-        t2.sprite.position.x+=50
-        
-        let t3 = createTile("x")
-        t3.sprite.position.x-=50
-        t3.sprite.position.y+=20
+        for var i = 1; i<=200; i+=30{
+            for var j = 1; j<=100; j+=30{
+                let t : Tile = createTile("x");
+                t.sprite.position = CGPointMake(CGFloat(i), CGFloat(j))
+            }
+        }
         
         /* startup function */
         setupScene()
@@ -42,7 +43,14 @@ class GameScene: SKScene {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch is began */
-        
+        let touch = touches.first!
+        let positionInScene = touch.locationInNode(self)
+        let touchedNode = self.nodeAtPoint(positionInScene)
+        for t in tiles{
+            if(touchedNode.isEqualToNode(t.sprite)){
+                print("touched.")
+            }
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -68,5 +76,15 @@ class GameScene: SKScene {
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
+        
+        self.backgroundColor = UIColor.whiteColor()
+        
+        let labelText = cat + "  >  " + subcat
+        let catLabel = SKLabelNode(text: labelText)
+        catLabel.fontColor=UIColor.blackColor()
+        
+        let length : CGFloat = CGFloat(labelText.characters.count)
+        catLabel.position = CGPointMake((length+45)*2, frame.size.height-30)
+        addChild(catLabel)
     }
 }

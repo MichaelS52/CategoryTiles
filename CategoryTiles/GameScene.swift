@@ -19,15 +19,15 @@ import CoreMotion
 var cat = "Sports"
 var subcat = "Hockey"
 
-var shelf = [Tile]()//creates an array, length 7, of all " "
+var shelf = [Tile?]()//creates an array, length 7
 var tiles = [Tile]()
 var motionManager = CMMotionManager()
 
 class Tile{
     var sprite : SKSpriteNode
-    var isDocked : Bool
+    var isDocked : Int //0 if its not, 1 if it is, 2 if it cannot be changed
     
-    init(sprite: SKSpriteNode, isDocked: Bool){
+    init(sprite: SKSpriteNode, isDocked: Int){
         self.sprite = sprite
         self.isDocked = isDocked
     }
@@ -58,15 +58,16 @@ class GameScene: SKScene {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch is began */
+        print(shelf)
         let touch = touches.first!
         let positionInScene = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(positionInScene)
         for t in tiles{
             if(touchedNode.isEqualToNode(t.sprite)){
-                if(t.isDocked){
+                if(t.isDocked==1){
                     remFromShelf(t)
-                }else{
-                    if(shelf.count<7){ // make sure shelf is not full
+                }else if(t.isDocked==0){
+                    if(!isShelfFull()){// make sure shelf is not full
                         addToShelf(t)
                     }
                 }
@@ -88,7 +89,7 @@ class GameScene: SKScene {
         sprite.physicsBody?.dynamic = true
         self.addChild(sprite)
         
-        let t = Tile(sprite:sprite,isDocked: false)
+        let t = Tile(sprite:sprite,isDocked: 0)
         tiles.append(t)
         return t
     }
@@ -112,10 +113,19 @@ class GameScene: SKScene {
     
     //Shelf functions
     func addToShelf(t : Tile){
-        shelf.append(t) //add to end of array
+        
+        let firstEmpty = getFirstShelfEmpty();
+        if(firstEmpty == -1){
+            shelf.append(t)
+        }else{
+            shelf[firstEmpty] = t
+        }
+        
         let pos = shelf.indexOf{$0===t} //Gets position of the letter in the array
         var start : CGPoint = CGPointMake((view?.bounds.width)!/7-5,(view?.bounds.height)!/2+20)
         start.x+=CGFloat((pos)!*46) //20 is that difference between underlines?
+        
+        t.isDocked=2 //make it not touchable
         
         /* Total transformations to add to the shelf */
         let scaleUp = SKAction.scaleTo(1.3, duration: 0.2)
@@ -128,22 +138,48 @@ class GameScene: SKScene {
         t.sprite.physicsBody?.dynamic = false
         t.sprite.physicsBody = nil
         
-        t.sprite.runAction(SKAction.sequence([scaleUp,transformation,scaleDown]))
-        
-        t.isDocked = true
+        t.sprite.runAction(SKAction.sequence([scaleUp,transformation,scaleDown]),completion: {
+          t.isDocked = 1
+        })
     }
     
     func remFromShelf(t : Tile){
         let pos = shelf.indexOf{$0===t}
-        shelf.removeAtIndex(pos!)
+        shelf[pos!] = nil
         let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-75)
         
-        let translate = SKAction.moveTo(target, duration: 1.2)
-        t.sprite.runAction(translate)
-        
-        t.isDocked = false
-        t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
-        t.sprite.physicsBody?.affectedByGravity = true;
-        t.sprite.physicsBody?.dynamic = true;
+        t.isDocked=2
+        let translate = SKAction.moveTo(target, duration: 1.0)
+        t.sprite.runAction(translate, completion: {
+            t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
+            t.sprite.physicsBody?.affectedByGravity = true;
+            t.sprite.physicsBody?.dynamic = true;
+            t.isDocked = 0
+        })
+    }
+    
+    //-1 means append
+    func getFirstShelfEmpty() -> Int{
+        for i in 0 ..< shelf.count {
+            let t = shelf[i]
+            if(t==nil){
+                return i;
+            }
+        }
+        return -1
+    }
+    
+    func isShelfFull() -> Bool {
+        if(shelf.count>=7){
+            for i in 0 ..< shelf.count{
+                let t = shelf[i]
+                if(t==nil){
+                    return false;
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
     }
 }

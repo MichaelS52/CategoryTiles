@@ -23,6 +23,7 @@ var shelf = [Tile?]()//creates an array, length 7
 var tiles = [Tile]()
 var motionManager = CMMotionManager()
 
+
 class Tile{
     var sprite : SKSpriteNode
     var isDocked : Int //0 if its not, 1 if it is, 2 if it cannot be changed
@@ -58,9 +59,9 @@ class GameScene: SKScene {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch is began */
-        print(shelf)
         let touch = touches.first!
         let positionInScene = touch.locationInNode(self)
+        
         let touchedNode = self.nodeAtPoint(positionInScene)
         for t in tiles{
             if(touchedNode.isEqualToNode(t.sprite)){
@@ -99,6 +100,9 @@ class GameScene: SKScene {
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
+        var swipeRight = UIPanGestureRecognizer(target: self, action: "swipeHandler:")
+        swipeRight.cancelsTouchesInView = true
+        self.view?.addGestureRecognizer(swipeRight)
         
         self.backgroundColor = UIColor.whiteColor()
         
@@ -109,6 +113,22 @@ class GameScene: SKScene {
         let length : CGFloat = CGFloat(labelText.characters.count)
         catLabel.position = CGPointMake((length+45)*2, frame.size.height-30)
         addChild(catLabel)
+    }
+    
+    func swipeHandler(gesture: UIPanGestureRecognizer){
+        var startTouch : CGPoint?
+        if(gesture.state == UIGestureRecognizerState.Began){
+            var began = gesture.locationInView(self.view)
+            print("Began: ", began.x, " ", began.y)
+            startTouch = CGPointMake(began.x, began.y)
+        }
+        if(gesture.state == UIGestureRecognizerState.Ended){
+            print("ended")
+            
+            //Check if swipe was intended to clear tiles
+            let thresh = CGFloat(50)
+            print("start: ", startTouch?.x)
+        }
     }
     
     //Shelf functions
@@ -180,6 +200,16 @@ class GameScene: SKScene {
             return true;
         }else{
             return false;
+        }
+    }
+    
+    func clearShelf(startX : CGFloat, endX : CGFloat){
+        print("clear shelf: ", startX," end: ",endX)
+        for i in 0 ..< shelf.count{
+            let t = shelf[i]
+            if(t?.sprite.position.x > startX && t?.sprite.position.x < endX){
+                remFromShelf(t!)
+            }
         }
     }
 }

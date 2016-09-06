@@ -100,9 +100,9 @@ class GameScene: SKScene {
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
-        var swipeRight = UIPanGestureRecognizer(target: self, action: "swipeHandler:")
-        swipeRight.cancelsTouchesInView = true
-        self.view?.addGestureRecognizer(swipeRight)
+        var swipeDown = UISwipeGestureRecognizer(target: self, action: "swipeHandler:")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        self.view?.addGestureRecognizer(swipeDown)
         
         self.backgroundColor = UIColor.whiteColor()
         
@@ -115,20 +115,8 @@ class GameScene: SKScene {
         addChild(catLabel)
     }
     
-    func swipeHandler(gesture: UIPanGestureRecognizer){
-        var startTouch : CGPoint?
-        if(gesture.state == UIGestureRecognizerState.Began){
-            var began = gesture.locationInView(self.view)
-            print("Began: ", began.x, " ", began.y)
-            startTouch = CGPointMake(began.x, began.y)
-        }
-        if(gesture.state == UIGestureRecognizerState.Ended){
-            print("ended")
-            
-            //Check if swipe was intended to clear tiles
-            let thresh = CGFloat(50)
-            print("start: ", startTouch?.x)
-        }
+    func swipeHandler(gesture: UIGestureRecognizer){
+        clearShelf()
     }
     
     //Shelf functions
@@ -166,10 +154,10 @@ class GameScene: SKScene {
     func remFromShelf(t : Tile){
         let pos = shelf.indexOf{$0===t}
         shelf[pos!] = nil
-        let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-75)
+        let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-50)
         
         t.isDocked=2
-        let translate = SKAction.moveTo(target, duration: 1.0)
+        let translate = SKAction.moveTo(target, duration: 0.3)
         t.sprite.runAction(translate, completion: {
             t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
             t.sprite.physicsBody?.affectedByGravity = true;
@@ -203,11 +191,10 @@ class GameScene: SKScene {
         }
     }
     
-    func clearShelf(startX : CGFloat, endX : CGFloat){
-        print("clear shelf: ", startX," end: ",endX)
+    func clearShelf(){
         for i in 0 ..< shelf.count{
-            let t = shelf[i]
-            if(t?.sprite.position.x > startX && t?.sprite.position.x < endX){
+            let t : Tile? = shelf[i]
+            if(t != nil){
                 remFromShelf(t!)
             }
         }

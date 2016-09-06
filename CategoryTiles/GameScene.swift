@@ -8,16 +8,19 @@
 
 /*TODO
 
-- When tiles are taken off the shelf, make it a translation at first, so thats its not immediately up to gravity
-- Need to totally restructure the shelf system, it is a dynamic sizing array so if you take one off the middle it wont respond correctly
-- Double clicking will move the tile up and back down really fast
+- DONE When tiles are taken off the shelf, make it a translation at first, so thats its not immediately up to gravity
+- DONE Need to totally restructure the shelf system, it is a dynamic sizing array so if you take one off the middle it wont respond correctly
+- DONE Double clicking will move the tile up and back down really fast
+- Add final guess underlines
  
 */
 import SpriteKit
 import CoreMotion
 
-var cat = "Sports"
-var subcat = "Hockey"
+var cat = ""
+var subcat = ""
+
+var words = [String]()
 
 var shelf = [Tile?]()//creates an array, length 7
 var tiles = [Tile]()
@@ -27,10 +30,12 @@ var motionManager = CMMotionManager()
 class Tile{
     var sprite : SKSpriteNode
     var isDocked : Int //0 if its not, 1 if it is, 2 if it cannot be changed
+    var word : String
     
-    init(sprite: SKSpriteNode, isDocked: Int){
+    init(sprite: SKSpriteNode, isDocked: Int, word: String){
         self.sprite = sprite
         self.isDocked = isDocked
+        self.word = word
     }
 }
 
@@ -63,6 +68,10 @@ class GameScene: SKScene {
         let positionInScene = touch.locationInNode(self)
         
         let touchedNode = self.nodeAtPoint(positionInScene)
+        if(touchedNode.userData?.valueForKey("back") != nil){
+            print("Go back")
+        }
+        
         for t in tiles{
             if(touchedNode.isEqualToNode(t.sprite)){
                 if(t.isDocked==1){
@@ -90,7 +99,7 @@ class GameScene: SKScene {
         sprite.physicsBody?.dynamic = true
         self.addChild(sprite)
         
-        let t = Tile(sprite:sprite,isDocked: 0)
+        let t = Tile(sprite:sprite,isDocked: 0, word: "word")
         tiles.append(t)
         return t
     }
@@ -106,12 +115,22 @@ class GameScene: SKScene {
         
         self.backgroundColor = UIColor.whiteColor()
         
-        let labelText = cat + " > " + subcat
+        let back = SKSpriteNode(imageNamed: "back.png")
+        back.position = CGPointMake(20, frame.height-20)
+        back.setScale(0.040)
+        back.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(20))
+        back.physicsBody?.dynamic=false
+        back.userData = [
+            "back" : "destination"
+        ]
+        addChild(back)
+        
+        let labelText = cat + " / " + subcat
         let catLabel = SKLabelNode(text: labelText)
+        catLabel.fontSize = 25
         catLabel.fontColor=UIColor.blackColor()
         
-        let length : CGFloat = CGFloat(labelText.characters.count)
-        catLabel.position = CGPointMake((length+45)*2, frame.size.height-30)
+        catLabel.position = CGPointMake(frame.size.width/2, frame.size.height-30)
         addChild(catLabel)
     }
     
@@ -198,5 +217,12 @@ class GameScene: SKScene {
                 remFromShelf(t!)
             }
         }
+    }
+    
+    func initializeData(wordArr : [String], category : String, subcategory : String){
+        print("initializing GameBoard")
+        words = wordArr;
+        cat = category;
+        subcat = subcategory;
     }
 }

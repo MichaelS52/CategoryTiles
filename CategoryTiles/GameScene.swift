@@ -39,6 +39,13 @@ class Tile{
         self.word = word
         self.letterValue = letterValue
     }
+    
+    func debugPrint(){
+        print("Tile - ",self.letterValue)
+        print("word: ",self.word)
+        print("isDocked: ",self.isDocked)
+        print("sprite: ",self.sprite.hash)
+    }
 }
 
 class GameScene: SKScene {
@@ -52,9 +59,9 @@ class GameScene: SKScene {
             for ch in characters{
                 let t : Tile = createTile(String(ch));
                 t.word = text
-                let inner = Int(20)
-                let randX = randomNumber(inner, max: Int(frame.width)-inner)
-                let randY = randomNumber(inner, max: Int(frame.height/2)-inner)
+                let inner = UInt32(20)
+                let randX = randomNumber(inner, max: UInt32(frame.width)-inner)
+                let randY = randomNumber(inner, max: UInt32(frame.height/2)-inner)
                 let randomRotation = arc4random_uniform(360)
                 
                 t.sprite.position = CGPointMake(CGFloat(randX), CGFloat(randY))
@@ -259,42 +266,45 @@ class GameScene: SKScene {
         }
         for w in words{
             if(shelfSpelt == w){
-                print("correct!")
                 for tile in shelf {
                     if(tile != nil){
-                        if(tile?.word != shelfSpelt){
-                            //find other tile and swap
-                            print("doesnt belong : ", tile?.letterValue)
-                            var correctTile = self.getATileFromWord(shelfSpelt, letter: (tile?.letterValue)!)
-                            if(correctTile != nil){
-                                correctTile?.word = (tile?.word)!
+                        if(tile!.word != shelfSpelt){
+                            let realtile : Tile? = self.getATileFromWord(shelfSpelt, letter: tile!.letterValue)
+                            if(realtile != nil){
+                                realtile?.word = (tile?.word)!
                                 tile?.word = shelfSpelt
-                                print("replaced")
                             }
                         }
                     }
-                    self.remFromShelfWithoutAnimation(tile!)
-                    tile?.sprite.removeFromParent()
+                }
+                for tile in shelf{
+                    if(tile != nil){
+                        remFromShelfWithoutAnimation(tile!)
+                        tile?.sprite.removeFromParent()
+                    }
                 }
             }
         }
     }
     
     func getATileFromWord(word : String, letter : String) -> Tile? {
-        for tile in shelf{
-            if(tile != nil){
-                if(tile?.word == word){
-                    if(tile?.letterValue == letter){
-                        return tile!;
-                    }
+        print("looking for letter :", word, letter)
+        for tile in tiles{
+            if(tile.word == word){
+                if(tile.letterValue == letter){
+                    print("found letter!")
+                    return tile;
                 }
             }
+
         }
         return nil;
     }
     
-    func randomNumber(min : Int, max : Int) -> CGFloat{
-        let randomNumber = arc4random_uniform(UInt32(max)-UInt32(min))+UInt32(min)
+    func randomNumber(min : UInt32, max : UInt32) -> CGFloat{
+        print("min ", min)
+        print("max ", max)
+        let randomNumber = arc4random_uniform(max-min)+min
         return CGFloat(randomNumber)
     }
     

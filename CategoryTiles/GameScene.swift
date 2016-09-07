@@ -31,11 +31,13 @@ class Tile{
     var sprite : SKSpriteNode
     var isDocked : Int //0 if its not, 1 if it is, 2 if it cannot be changed
     var word : String
+    var letterValue : String
     
-    init(sprite: SKSpriteNode, isDocked: Int, word: String){
+    init(sprite: SKSpriteNode, isDocked: Int, word: String, letterValue: String){
         self.sprite = sprite
         self.isDocked = isDocked
         self.word = word
+        self.letterValue = letterValue
     }
 }
 
@@ -124,7 +126,7 @@ class GameScene: SKScene {
         sprite.physicsBody?.dynamic = true
         self.addChild(sprite)
         
-        let t = Tile(sprite:sprite,isDocked: 0, word: "word")
+        let t = Tile(sprite:sprite,isDocked: 0, word: "word", letterValue: letter)
         tiles.append(t)
         return t
     }
@@ -189,7 +191,8 @@ class GameScene: SKScene {
         t.sprite.physicsBody = nil
         
         t.sprite.runAction(SKAction.sequence([scaleUp,transformation,scaleDown]),completion: {
-          t.isDocked = 1
+            t.isDocked = 1
+            self.checkShelf()
         })
     }
     
@@ -206,6 +209,11 @@ class GameScene: SKScene {
             t.sprite.physicsBody?.dynamic = true;
             t.isDocked = 0
         })
+    }
+    
+    func remFromShelfWithoutAnimation(t : Tile){
+        let pos = shelf.indexOf{$0===t}
+        shelf[pos!] = nil
     }
     
     //-1 means append
@@ -242,9 +250,52 @@ class GameScene: SKScene {
         }
     }
     
+    func checkShelf(){
+        var shelfSpelt = ""
+        for tile in shelf{
+            if(tile != nil){
+                shelfSpelt += (tile?.letterValue)!
+            }
+        }
+        for w in words{
+            if(shelfSpelt == w){
+                print("correct!")
+                for tile in shelf {
+                    if(tile != nil){
+                        if(tile?.word != shelfSpelt){
+                            //find other tile and swap
+                            print("doesnt belong : ", tile?.letterValue)
+                            var correctTile = self.getATileFromWord(shelfSpelt, letter: (tile?.letterValue)!)
+                            if(correctTile != nil){
+                                correctTile?.word = (tile?.word)!
+                                tile?.word = shelfSpelt
+                                print("replaced")
+                            }
+                        }
+                    }
+                    self.remFromShelfWithoutAnimation(tile!)
+                    tile?.sprite.removeFromParent()
+                }
+            }
+        }
+    }
+    
+    func getATileFromWord(word : String, letter : String) -> Tile? {
+        for tile in shelf{
+            if(tile != nil){
+                if(tile?.word == word){
+                    if(tile?.letterValue == letter){
+                        return tile!;
+                    }
+                }
+            }
+        }
+        return nil;
+    }
+    
     func randomNumber(min : Int, max : Int) -> CGFloat{
         let randomNumber = arc4random_uniform(UInt32(max)-UInt32(min))+UInt32(min)
-        return CGFloat(randomNumber)
+        return randomNumber
     }
     
     func initializeData(wordArr : [String], category : String, subcategory : String){

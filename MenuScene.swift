@@ -18,7 +18,7 @@ class MenuScene: SKScene {
         start.position = CGPointMake(view.bounds.width/2, view.bounds.height/2)
         start.userData = [
             "category" : "Sports",
-            "subcategory" : "Basketball",
+            "subcategory" : "Hockey",
             "words" : "stick,puck,goalie,penalty",
             "destination" : "gameboard"
         ]

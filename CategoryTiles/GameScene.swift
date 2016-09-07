@@ -42,21 +42,28 @@ class Tile{
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* startup function */
-        
+        print(self.size.width, " , " , self.size.height)
         self.size = view.bounds.size //set the size to the view size
         
-        /* Create a few test tiles */
-        for var i = 1; i<=200; i+=30{
-            for var j = 1; j<=100; j+=30{
-                let t : Tile = createTile("x");
-                t.sprite.position = CGPointMake(CGFloat(i), CGFloat(j))
+        for text in words{
+            let characters = [Character](text.characters)
+            for ch in characters{
+                let t : Tile = createTile(String(ch));
+                t.word = text
+                let inner = Int(20)
+                let randX = randomNumber(inner, max: Int(frame.width)-inner)
+                let randY = randomNumber(inner, max: Int(frame.height/2)-inner)
+                let randomRotation = arc4random_uniform(360)
+                
+                t.sprite.position = CGPointMake(CGFloat(randX), CGFloat(randY))
+                t.sprite.zRotation = CGFloat(randomRotation)
             }
         }
         
         let shelfBase = SKLabelNode(text: "__  __  __  __  __  __  __")
         shelfBase.fontColor = UIColor.blackColor()
         shelfBase.fontSize = 30
-        shelfBase.position = CGPointMake(CGFloat(self.size.width/2), CGFloat(self.size.height/2))
+        shelfBase.position = CGPointMake(CGFloat(self.size.width/2), CGFloat(self.size.height/10)*6)
         addChild(shelfBase)
         
         setupScene()
@@ -68,8 +75,25 @@ class GameScene: SKScene {
         let positionInScene = touch.locationInNode(self)
         
         let touchedNode = self.nodeAtPoint(positionInScene)
-        if(touchedNode.userData?.valueForKey("back") != nil){
-            print("Go back")
+        print("name: ", touchedNode.name)
+        if(touchedNode.name == "back"){
+            if let scene = MenuScene(fileNamed:"MenuScene") {
+                // Configure the view.
+                let skView = self.view! as! SKView
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.showsPhysics = true
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = true
+                
+                /* Set the scale mode to scale to fit the window */
+                scene.scaleMode = .AspectFill
+                
+                let transition = SKTransition.moveInWithDirection(.Left, duration: 0.5)
+                skView.presentScene(scene, transition: transition)
+            }
+
         }
         
         for t in tiles{
@@ -105,7 +129,7 @@ class GameScene: SKScene {
     }
     
     func setupScene(){
-        let rect : CGRect = CGRect(x: 0, y: 0, width: frame.width, height: frame.height/2)
+        let rect : CGRect = CGRect(x: 0, y: 0, width: frame.width, height: (frame.height/10)*6)
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
@@ -120,9 +144,7 @@ class GameScene: SKScene {
         back.setScale(0.040)
         back.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(20))
         back.physicsBody?.dynamic=false
-        back.userData = [
-            "back" : "destination"
-        ]
+        back.name = "back"
         addChild(back)
         
         let labelText = cat + " / " + subcat
@@ -149,7 +171,7 @@ class GameScene: SKScene {
         }
         
         let pos = shelf.indexOf{$0===t} //Gets position of the letter in the array
-        var start : CGPoint = CGPointMake((view?.bounds.width)!/7-5,(view?.bounds.height)!/2+20)
+        var start : CGPoint = CGPointMake((view?.bounds.width)!/7-5,((view?.bounds.height)!/10)*6+20)
         start.x+=CGFloat((pos)!*46) //20 is that difference between underlines?
         
         t.isDocked=2 //make it not touchable
@@ -217,6 +239,11 @@ class GameScene: SKScene {
                 remFromShelf(t!)
             }
         }
+    }
+    
+    func randomNumber(min : Int, max : Int) -> CGFloat{
+        let randomNumber = arc4random_uniform(UInt32(max)-UInt32(min))+UInt32(min)
+        return CGFloat(randomNumber)
     }
     
     func initializeData(wordArr : [String], category : String, subcategory : String){

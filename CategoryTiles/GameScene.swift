@@ -117,7 +117,8 @@ class GameScene: SKScene {
     }
     
     func createTile(letter : String) -> Tile{
-        let sprite = SKSpriteNode(imageNamed: "tile.png")
+        let tileFile = letter + ".png"
+        let sprite = SKSpriteNode(imageNamed: tileFile)
         sprite.position = CGPointMake(frame.size.width/2,frame.size.height/2)
         sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
         sprite.physicsBody?.dynamic = true

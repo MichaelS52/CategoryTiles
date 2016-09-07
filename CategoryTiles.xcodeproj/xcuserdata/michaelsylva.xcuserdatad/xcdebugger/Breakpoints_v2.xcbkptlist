@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CategoryTiles/GameScene.swift"
-            timestampString = "494895863.070527"
+            timestampString = "494908710.353569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "getFirstShelfEmpty()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CategoryTiles/GameScene.swift"
-            timestampString = "494895863.070527"
+            timestampString = "494908710.353569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "clearShelf()"
             landmarkType = "5">
          </BreakpointContent>
@@ -93,84 +93,6 @@
             endingLineNumber = "35"
             landmarkName = "touchesBegan(_:withEvent:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CategoryTiles/GameScene.swift"
-            timestampString = "494892156.941999"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "GameScene"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CategoryTiles.GameScene.__deallocating_deinit"
-                  moduleName = "CategoryTiles"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/michaelsylva/Desktop/CategoryTiles/CategoryTiles/GameScene.swift"
-                  timestampString = "494892157.131814"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CategoryTiles.GameScene.init (size : __C.CGSize) -&gt; CategoryTiles.GameScene"
-                  moduleName = "CategoryTiles"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/michaelsylva/Desktop/CategoryTiles/CategoryTiles/GameScene.swift"
-                  timestampString = "494892157.132135"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "104">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CategoryTiles.GameScene.init () -&gt; CategoryTiles.GameScene"
-                  moduleName = "CategoryTiles"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/michaelsylva/Desktop/CategoryTiles/CategoryTiles/GameScene.swift"
-                  timestampString = "494892157.132306"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CategoryTiles.GameScene.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;CategoryTiles.GameScene&gt;"
-                  moduleName = "CategoryTiles"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/michaelsylva/Desktop/CategoryTiles/CategoryTiles/GameScene.swift"
-                  timestampString = "494892157.132416"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "132">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

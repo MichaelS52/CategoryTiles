@@ -295,7 +295,7 @@ class GameScene: SKScene {
     
     func randomNumber(min : Int, max : Int) -> CGFloat{
         let randomNumber = arc4random_uniform(UInt32(max)-UInt32(min))+UInt32(min)
-        return randomNumber
+        return CGFloat(randomNumber)
     }
     
     func initializeData(wordArr : [String], category : String, subcategory : String){

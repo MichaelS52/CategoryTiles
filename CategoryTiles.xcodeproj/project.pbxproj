@@ -18,6 +18,7 @@
 		F10ADE9F1D7BC42C009CDAC9 /* CategoryTilesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10ADE9E1D7BC42C009CDAC9 /* CategoryTilesUITests.swift */; };
 		F1A7D8071D7F5A820010A1E4 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */; };
 		F1A7D80B1D7F5C8A0010A1E4 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */; };
+		F7A3160C1D81815F0061FFF8 /* Dictionary in Resources */ = {isa = PBXBuildFile; fileRef = F7A3160B1D81815F0061FFF8 /* Dictionary */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		F10ADEA01D7BC42C009CDAC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuScene.swift; path = ../MenuScene.swift; sourceTree = "<group>"; };
 		F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		F7A3160B1D81815F0061FFF8 /* Dictionary */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Dictionary; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		F10ADE6E1D7BC42B009CDAC9 = {
 			isa = PBXGroup;
 			children = (
+				F7A3160B1D81815F0061FFF8 /* Dictionary */,
 				F10ADE791D7BC42C009CDAC9 /* CategoryTiles */,
 				F10ADE921D7BC42C009CDAC9 /* CategoryTilesTests */,
 				F10ADE9D1D7BC42C009CDAC9 /* CategoryTilesUITests */,
@@ -205,7 +208,7 @@
 				TargetAttributes = {
 					F10ADE761D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 66PDD578N7;
+						DevelopmentTeam = 5262L6L6LF;
 					};
 					F10ADE8E1D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -246,6 +249,7 @@
 				F10ADE891D7BC42C009CDAC9 /* LaunchScreen.storyboard in Resources */,
 				F10ADE861D7BC42C009CDAC9 /* Assets.xcassets in Resources */,
 				F1A7D80B1D7F5C8A0010A1E4 /* MenuScene.sks in Resources */,
+				F7A3160C1D81815F0061FFF8 /* Dictionary in Resources */,
 				F10ADE841D7BC42C009CDAC9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

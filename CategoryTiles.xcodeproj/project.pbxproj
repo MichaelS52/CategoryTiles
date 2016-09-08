@@ -19,6 +19,8 @@
 		F1A7D8071D7F5A820010A1E4 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */; };
 		F1A7D80B1D7F5C8A0010A1E4 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */; };
 		F7A3160C1D81815F0061FFF8 /* Dictionary in Resources */ = {isa = PBXBuildFile; fileRef = F7A3160B1D81815F0061FFF8 /* Dictionary */; };
+		F7A3160E1D8182A20061FFF8 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A3160D1D8182A20061FFF8 /* GameData.swift */; };
+		F7A316111D8182AE0061FFF8 /* GameData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7A3160F1D8182AE0061FFF8 /* GameData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuScene.swift; path = ../MenuScene.swift; sourceTree = "<group>"; };
 		F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		F7A3160B1D81815F0061FFF8 /* Dictionary */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Dictionary; sourceTree = "<group>"; };
+		F7A3160D1D8182A20061FFF8 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
+		F7A316101D8182AE0061FFF8 /* GameData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,8 @@
 				F10ADE851D7BC42C009CDAC9 /* Assets.xcassets */,
 				F10ADE871D7BC42C009CDAC9 /* LaunchScreen.storyboard */,
 				F10ADE8A1D7BC42C009CDAC9 /* Info.plist */,
+				F7A3160F1D8182AE0061FFF8 /* GameData.xcdatamodeld */,
+				F7A3160D1D8182A20061FFF8 /* GameData.swift */,
 			);
 			path = CategoryTiles;
 			sourceTree = "<group>";
@@ -276,6 +282,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F10ADE7F1D7BC42C009CDAC9 /* GameScene.swift in Sources */,
+				F7A316111D8182AE0061FFF8 /* GameData.xcdatamodeld in Sources */,
+				F7A3160E1D8182A20061FFF8 /* GameData.swift in Sources */,
 				F1A7D8071D7F5A820010A1E4 /* MenuScene.swift in Sources */,
 				F10ADE811D7BC42C009CDAC9 /* GameViewController.swift in Sources */,
 				F10ADE7B1D7BC42C009CDAC9 /* AppDelegate.swift in Sources */,
@@ -424,7 +432,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CategoryTiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sylva.CategoryTiles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -438,7 +446,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CategoryTiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sylva.CategoryTiles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -534,6 +542,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F7A3160F1D8182AE0061FFF8 /* GameData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F7A316101D8182AE0061FFF8 /* GameData.xcdatamodel */,
+			);
+			currentVersion = F7A316101D8182AE0061FFF8 /* GameData.xcdatamodel */;
+			path = GameData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F10ADE6F1D7BC42B009CDAC9 /* Project object */;
 }

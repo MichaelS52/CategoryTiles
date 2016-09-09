@@ -32,6 +32,7 @@ class Tile{
     var isDocked : Int //0 if its not, 1 if it is, 2 if it cannot be changed
     var word : String
     var letterValue : String
+    var slot : SKSpriteNode? = nil
     
     init(sprite: SKSpriteNode, isDocked: Int, word: String, letterValue: String){
         self.sprite = sprite
@@ -45,6 +46,10 @@ class Tile{
         print("word: ",self.word)
         print("isDocked: ",self.isDocked)
         print("sprite: ",self.sprite.hash)
+    }
+    
+    func setSlot(sprite : SKSpriteNode){
+        self.slot = sprite
     }
 }
 
@@ -131,6 +136,7 @@ class GameScene: SKScene {
         sprite.position = CGPointMake(frame.size.width/2,frame.size.height/2)
         sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
         sprite.physicsBody?.dynamic = true
+        sprite.zPosition=5
         self.addChild(sprite)
         
         let t = Tile(sprite:sprite,isDocked: 0, word: "word", letterValue: letter)
@@ -139,6 +145,7 @@ class GameScene: SKScene {
     }
     
     func setupScene(){
+        addFinishedSlots()
         let rect : CGRect = CGRect(x: 0, y: 0, width: frame.width, height: (frame.height/10)*6)
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
@@ -148,6 +155,7 @@ class GameScene: SKScene {
         self.view?.addGestureRecognizer(swipeDown)
         
         self.backgroundColor = UIColor.whiteColor()
+        
         
         let back = SKSpriteNode(imageNamed: "back.png")
         back.position = CGPointMake(20, frame.height-20)
@@ -201,6 +209,54 @@ class GameScene: SKScene {
             t.isDocked = 1
             self.checkShelf()
         })
+    }
+    
+    func sendToSlot(t : Tile){
+        if(t.slot != nil){
+            t.sprite.zPosition = 10 //put it on top so its not under any during animation
+            let scaleDown = SKAction.scaleTo(0.5, duration: 1)
+            let translate = SKAction.moveTo(t.slot!.position, duration: 1)
+            let transformation = SKAction.group([scaleDown,translate])
+            
+            t.sprite.runAction(transformation,completion: {
+                t.isDocked=2
+                t.sprite.zPosition = 5 //put it back under
+            })
+        }
+    }
+    
+    func addFinishedSlots(){
+        var startingX : CGFloat = 0
+        var yValue : CGFloat = self.size.height-80
+        var wordCount = 0
+        for w in words{
+            if(wordCount%2==0){
+                startingX = self.size.width/2+20 //second of the two on row
+            }else{
+                startingX = 20 // if its the first of the two words
+            }
+            var pos : CGFloat = 0
+            for char in w.characters{
+                let empty = addEmptySlot(startingX+pos, y: yValue)
+                let t = getATileFromWord(w, letter: String(char))
+                t?.setSlot(empty)
+                pos+=22
+            }
+            wordCount+=1
+            if(wordCount==2){
+                yValue = self.size.height-120
+            }
+        }
+    }
+    
+    func addEmptySlot(x : CGFloat, y : CGFloat) -> SKSpriteNode{
+        let empty = SKSpriteNode(imageNamed: "slot.png")
+        empty.position = CGPointMake(x, y)
+        empty.setScale(CGFloat(0.5))
+        empty.zPosition = 0
+        print("Adding slot: ", x, " ", y)
+        self.addChild(empty)
+        return empty
     }
     
     func remFromShelf(t : Tile){
@@ -273,14 +329,19 @@ class GameScene: SKScene {
                             if(realtile != nil){
                                 realtile?.word = (tile?.word)!
                                 tile?.word = shelfSpelt
+                                let realSlot = realtile?.slot
+                                let regSlot = tile?.slot
+                                
+                                tile?.slot = realSlot
+                                realtile?.slot = regSlot
                             }
                         }
                     }
                 }
                 for tile in shelf{
                     if(tile != nil){
+                        sendToSlot(tile!)
                         remFromShelfWithoutAnimation(tile!)
-                        tile?.sprite.removeFromParent()
                     }
                 }
             }

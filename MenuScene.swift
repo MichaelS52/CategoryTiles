@@ -11,6 +11,9 @@ import SpriteKit
 
 class MenuScene: SKScene {
     override func didMoveToView(view: SKView) {
+        
+        let data = GameData()
+
         backgroundColor = UIColor.whiteColor()
         self.size = view.bounds.size
         let hockey = SKLabelNode(text: "Sports / Hockey");

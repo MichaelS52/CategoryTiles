@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
+    <entity name="Category" representedClassName=".Catagory" syncable="YES">
+        <attribute name="complete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="game" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Game" syncable="YES"/>
+    </entity>
+    <entity name="Game" representedClassName=".Game" syncable="YES">
+        <attribute name="complete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="solution" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Solution" syncable="YES"/>
+    </entity>
+    <entity name="Solution" representedClassName=".Solution" syncable="YES">
+        <attribute name="answer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="answerId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="complete" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Category" positionX="-342" positionY="-81" width="128" height="103"/>
+        <element name="Game" positionX="-99" positionY="-63" width="128" height="103"/>
+        <element name="Solution" positionX="79" positionY="-54" width="128" height="88"/>
+    </elements>
+</model>

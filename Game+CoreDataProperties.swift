@@ -1,8 +1,8 @@
 //
-//  Solution+CoreDataProperties.swift
+//  Game+CoreDataProperties.swift
 //  CategoryTiles
 //
-//  Created by Bill Sylva on 9/7/16.
+//  Created by Bill Sylva on 9/10/16.
 //  Copyright © 2016 Michael Sylva. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,10 +12,12 @@
 import Foundation
 import CoreData
 
-extension Solution {
+extension Game {
 
-    @NSManaged var answer: String?
     @NSManaged var complete: NSNumber?
-    @NSManaged var answerId: NSNumber?
+    @NSManaged var id: NSNumber?
+    @NSManaged var title: String?
+    @NSManaged var category: Category?
+    @NSManaged var solution: NSSet?
 
 }

@@ -78,7 +78,7 @@ class GameScene: SKScene {
         setupScene()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch is began */
         let touch = touches.first!
         let positionInScene = touch.locationInNode(self)
@@ -172,7 +172,7 @@ class GameScene: SKScene {
     
     //Shelf functions
     func addToShelf(t : Tile){
-        
+        t.isDocked=2 //make it not touchable
         let firstEmpty = getFirstShelfEmpty();
         if(firstEmpty == -1){
             shelf.append(t)
@@ -184,7 +184,6 @@ class GameScene: SKScene {
         var start : CGPoint = CGPointMake((view?.bounds.width)!/7-5,((view?.bounds.height)!/10)*6+20)
         start.x+=CGFloat((pos)!*46) //20 is that difference between underlines?
         
-        t.isDocked=2 //make it not touchable
         
         /* Total transformations to add to the shelf */
         let scaleUp = SKAction.scaleTo(1.3, duration: 0.2)
@@ -204,11 +203,11 @@ class GameScene: SKScene {
     }
     
     func remFromShelf(t : Tile){
+        t.isDocked=2
         let pos = shelf.indexOf{$0===t}
         shelf[pos!] = nil
         let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-50)
         
-        t.isDocked=2
         let translate = SKAction.moveTo(target, duration: 0.3)
         t.sprite.runAction(translate, completion: {
             t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
@@ -252,7 +251,10 @@ class GameScene: SKScene {
         for i in 0 ..< shelf.count{
             let t : Tile? = shelf[i]
             if(t != nil){
-                remFromShelf(t!)
+                if (t?.isDocked != 1) {
+                    print ("a tile is not in shelf")
+                }
+            remFromShelf(t!)
             }
         }
     }

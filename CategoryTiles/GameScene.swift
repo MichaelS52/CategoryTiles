@@ -261,17 +261,18 @@ class GameScene: SKScene {
     
     func remFromShelf(t : Tile){
         let pos = shelf.indexOf{$0===t}
-        shelf[pos!] = nil
-        let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-50)
-        
-        t.isDocked=2
-        let translate = SKAction.moveTo(target, duration: 0.3)
-        t.sprite.runAction(translate, completion: {
-            t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
-            t.sprite.physicsBody?.affectedByGravity = true;
-            t.sprite.physicsBody?.dynamic = true;
-            t.isDocked = 0
-        })
+        if(pos != nil){
+            shelf[pos!] = nil
+            let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-50)
+            t.isDocked=2
+            let translate = SKAction.moveTo(target, duration: 0.3)
+            t.sprite.runAction(translate, completion: {
+                t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
+                t.sprite.physicsBody?.affectedByGravity = true;
+                t.sprite.physicsBody?.dynamic = true;
+                t.isDocked = 0
+            })
+        }
     }
     
     func remFromShelfWithoutAnimation(t : Tile){
@@ -305,8 +306,7 @@ class GameScene: SKScene {
     }
     
     func clearShelf(){
-        for i in 0 ..< shelf.count{
-            let t : Tile? = shelf[i]
+        for t in shelf{
             if(t != nil){
                 remFromShelf(t!)
             }
@@ -371,6 +371,10 @@ class GameScene: SKScene {
     
     func initializeData(wordArr : [String], category : String, subcategory : String){
         print("initializing GameBoard")
+        
+        shelf = [Tile]()
+        tiles = [Tile]()
+        
         words = wordArr;
         cat = category;
         subcat = subcategory;

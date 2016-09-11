@@ -18,6 +18,8 @@
 		F10ADE9F1D7BC42C009CDAC9 /* CategoryTilesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10ADE9E1D7BC42C009CDAC9 /* CategoryTilesUITests.swift */; };
 		F1A7D8071D7F5A820010A1E4 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */; };
 		F1A7D80B1D7F5C8A0010A1E4 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */; };
+		F1A7D80D1D84E9FF0010A1E4 /* CategoryMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1A7D80C1D84E9FF0010A1E4 /* CategoryMenu.sks */; };
+		F1A7D80F1D84EA180010A1E4 /* CategoryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7D80E1D84EA180010A1E4 /* CategoryMenu.swift */; };
 		F76730BF1D825EEF00607321 /* DefaultDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76730B81D825EEF00607321 /* DefaultDatabase.swift */; };
 		F77790DE1D84452F00260570 /* Game+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77790D81D84452F00260570 /* Game+CoreDataProperties.swift */; };
 		F77790DF1D84452F00260570 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77790D91D84452F00260570 /* Game.swift */; };
@@ -65,6 +67,8 @@
 		F10ADEA01D7BC42C009CDAC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuScene.swift; path = ../MenuScene.swift; sourceTree = "<group>"; };
 		F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		F1A7D80C1D84E9FF0010A1E4 /* CategoryMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CategoryMenu.sks; sourceTree = "<group>"; };
+		F1A7D80E1D84EA180010A1E4 /* CategoryMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryMenu.swift; sourceTree = "<group>"; };
 		F76730B81D825EEF00607321 /* DefaultDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultDatabase.swift; sourceTree = "<group>"; };
 		F77790D81D84452F00260570 /* Game+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Game+CoreDataProperties.swift"; path = "../Game+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F77790D91D84452F00260570 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = ../Game.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		F10ADE791D7BC42C009CDAC9 /* CategoryTiles */ = {
 			isa = PBXGroup;
 			children = (
+				F1A7D80C1D84E9FF0010A1E4 /* CategoryMenu.sks */,
+				F1A7D80E1D84EA180010A1E4 /* CategoryMenu.swift */,
 				F1A7D8061D7F5A820010A1E4 /* MenuScene.swift */,
 				F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */,
 				F10ADE7A1D7BC42C009CDAC9 /* AppDelegate.swift */,
@@ -235,7 +241,7 @@
 				TargetAttributes = {
 					F10ADE761D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 5262L6L6LF;
+						DevelopmentTeam = 66PDD578N7;
 					};
 					F10ADE8E1D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -276,6 +282,7 @@
 				F10ADE891D7BC42C009CDAC9 /* LaunchScreen.storyboard in Resources */,
 				F10ADE861D7BC42C009CDAC9 /* Assets.xcassets in Resources */,
 				F1A7D80B1D7F5C8A0010A1E4 /* MenuScene.sks in Resources */,
+				F1A7D80D1D84E9FF0010A1E4 /* CategoryMenu.sks in Resources */,
 				F10ADE841D7BC42C009CDAC9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,6 +313,7 @@
 				F77790E31D84452F00260570 /* Category.swift in Sources */,
 				F77790DF1D84452F00260570 /* Game.swift in Sources */,
 				F7C5098A1D845E1700D40457 /* Sports1.swift in Sources */,
+				F1A7D80F1D84EA180010A1E4 /* CategoryMenu.swift in Sources */,
 				F7A316111D8182AE0061FFF8 /* GameData.xcdatamodeld in Sources */,
 				F7A3160E1D8182A20061FFF8 /* GameData.swift in Sources */,
 				F1A7D8071D7F5A820010A1E4 /* MenuScene.swift in Sources */,
@@ -460,7 +468,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CategoryTiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Michael.CategoryTiles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -474,7 +482,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CategoryTiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Michael.CategoryTiles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

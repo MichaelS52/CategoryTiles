@@ -35,6 +35,7 @@ class TitleNode {
     }
 }
 
+
 class GameData: NSObject {
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate
@@ -127,6 +128,41 @@ class GameData: NSObject {
         }
         return titles
     }
+    
+    func getPuzzle(category:String, game: String) -> String {
+        print ("getPuzzle \(category) \(game)")
+        let fetchReq = NSFetchRequest(entityName: "Solution")
+        fetchReq.predicate = NSPredicate(format: "game.title = %@ AND game.category.title = %@",
+                                         game, category)
+        // var titles:[TitleNode] = []
+        var retString = ""
+        var count = 0
+
+        do {
+            let result = try managedObjectContext!.executeFetchRequest(fetchReq)
+            for resultItem in result  {
+                let solItem = resultItem as! Solution
+                var done = false
+                if (solItem.complete == true) {
+                    done = true
+                }
+                if (count > 0) {
+                    retString = retString + ","
+                }
+                print ("==>\(solItem.answer)")
+                retString = retString + solItem.answer!
+                count += 1
+                
+                //let newTitle = TitleNode(t: catItem.title!, done: done)
+                // titles.append(newTitle)
+            }
+            
+        } catch let error as NSError {
+            // failure
+            print("Fetch failed: \(error.localizedDescription)")
+        }
+        return retString
+    }
 
     func dumpDatabase() {
         var fetchReq = NSFetchRequest(entityName: "Category")
@@ -154,7 +190,9 @@ class GameData: NSObject {
             // failure
             print("Fetch failed: \(error.localizedDescription)")
         }
-        
+    }
+
+    func dumpDatabaseShort() {
         //
         print ("----------------------------------")
         print ("get with get functions")
@@ -164,6 +202,8 @@ class GameData: NSObject {
             let gameList = getGameList(cat.title)
             for game in gameList {
                 print ("--\(game.title) - \(game.complete)")
+                let aList = getPuzzle(cat.title, game: game.title)
+                print ("----\(aList)")
             }
         }
         

@@ -185,24 +185,26 @@ class DefaultDatabase: NSObject {
         newGame.category = cat
         
         let solRelation = newGame.valueForKeyPath("solution")
-        var sol = insertSolution(a1, id: 1)
+        var sol = insertSolution(a1, id: 1, game:newGame)
         solRelation!.addObject(sol)
-        sol = insertSolution(a2, id: 2)
+        sol = insertSolution(a2, id: 2, game:newGame)
         solRelation!.addObject(sol)
-        sol = insertSolution(a3, id: 3)
+        sol = insertSolution(a3, id: 3, game:newGame)
         solRelation!.addObject(sol)
-        sol = insertSolution(a4, id: 4)
+        sol = insertSolution(a4, id: 4, game:newGame)
         solRelation!.addObject(sol)
 
         return newGame
     }
-    func insertSolution (answer: String, id: Int) -> Solution {
+    func insertSolution (answer: String, id: Int, game: Game) -> Solution {
         let entityDescription = NSEntityDescription.entityForName("Solution",
                                                                   inManagedObjectContext:managedObjectContext!)
         let newSolution = Solution(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         newSolution.answer = answer
         newSolution.answerId = id
         newSolution.complete = false
+        newSolution.game = game
+
         return newSolution
     }
 }

@@ -9,23 +9,24 @@
 import Foundation
 import UIKit
 import CoreData
+import SpriteKit
 
 class TitleNode {
     var title:String = ""
     var complete:Bool = false
-    var position:CGPoint
+    var sprite:SKNode?
     
     init(t:String, done: Bool){
         self.title = t
         self.complete = done
-        self.position = CGPoint(x:0, y:0)
+        self.sprite = nil
     }
     
-    func setPosition(pos: CGPoint){
-        self.position = pos
+    func setNode(sprite: SKNode){
+        self.sprite = sprite
     }
-    func getPosition() -> CGPoint{
-        return self.position
+    func getNode() -> SKNode?{
+        return self.sprite
     }
     
     func debugPrint(){
@@ -42,10 +43,8 @@ class GameData: NSObject {
     override init() {
         
         super.init()
-        print ("init database")
         
         let fReq: NSFetchRequest = NSFetchRequest(entityName: "Category")
-        print ("a")
         do {
             let result = try managedObjectContext!.executeFetchRequest(fReq)
             

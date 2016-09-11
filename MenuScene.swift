@@ -10,35 +10,28 @@ import UIKit
 import SpriteKit
 
 class MenuScene: SKScene {
+    
+    var titles = [TitleNode]()
+    
+    func initialize(titles: [TitleNode]){
+        self.titles = titles
+    }
+    
     override func didMoveToView(view: SKView) {
         
         let data = GameData()
         data.dumpDatabase()
+        self.backgroundColor = UIColor.whiteColor()
         
-        backgroundColor = UIColor.whiteColor()
-        self.size = view.bounds.size
-        let hockey = SKLabelNode(text: "Sports / Hockey");
-        hockey.fontColor = UIColor.blackColor()
-        hockey.position = CGPointMake(view.bounds.width/2, view.bounds.height/2)
-        hockey.userData = [
-            "category" : "Sports",
-            "subcategory" : "Hockey",
-            "words" : "stick,puck,goalie,penalty",
-            "destination" : "gameboard"
-        ]
+        print("Moved to scene ", titles)
         
-        let basketball = SKLabelNode(text: "Sports / Basketball");
-        basketball.fontColor = UIColor.blackColor()
-        basketball.position = CGPointMake(view.bounds.width/2, view.bounds.height/2-100)
-        basketball.userData = [
-            "category" : "Sports",
-            "subcategory" : "Basketball",
-            "words" : "rim,guard,zone,rebound",
-            "destination" : "gameboard"
-        ]
+        var count = self.size.height-35
+        for title in titles {
+            let label = SKLabelNode(text: title.title)
+            label.position = CGPointMake(CGFloat(self.size.width/2), count)
+            count-=35
+        }
         
-        self.addChild(hockey)
-        self.addChild(basketball)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

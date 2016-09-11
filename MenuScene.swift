@@ -30,6 +30,15 @@ class MenuScene: SKScene {
             let label = SKLabelNode(text: title.title)
             label.position = CGPointMake(CGFloat(self.size.width/2), count)
             label.fontColor = UIColor.blackColor()
+            label.name = "title"
+            let words = GameData().getPuzzle(cat,game: title.title)
+            print("Words:",words)
+            
+            label.userData = [
+                "category":cat,
+                "subcategory":title.title,
+                "words":GameData().getPuzzle(cat, game: title.title)
+            ]
             count-=35
             self.addChild(label)
         }
@@ -42,16 +51,18 @@ class MenuScene: SKScene {
         print("touched: ", positionInScene.x, " ", positionInScene.y)
         
         let touchedNode = self.nodeAtPoint(positionInScene)
-        if(touchedNode.userData?.valueForKey("destination") != nil){
-            var cat : String = touchedNode.userData!.valueForKey("category") as! String
-            var subcat : String = touchedNode.userData!.valueForKey("subcategory") as! String
-            var words : String = touchedNode.userData!.valueForKey("words") as! String
-            var wordArr = words.componentsSeparatedByString(",")
+        if(touchedNode.name != nil){
+            if(touchedNode.name == "title"){
+                let cat : String = touchedNode.userData!.valueForKey("category") as! String
+                let subcat : String = touchedNode.userData!.valueForKey("subcategory") as! String
+                let words : String = touchedNode.userData!.valueForKey("words") as! String
+                let wordArr = words.componentsSeparatedByString(",")
             
-            let scene = GameScene(fileNamed:"GameScene")
-            scene!.initializeData(wordArr, category: cat, subcategory: subcat)
-            let transition = SKTransition.moveInWithDirection(.Right, duration: 0.5)
-            view!.presentScene(scene!, transition: transition)
+                let scene = GameScene(fileNamed:"GameScene")
+                scene!.initializeData(wordArr, category: cat, subcategory: subcat)
+                let transition = SKTransition.moveInWithDirection(.Right, duration: 0.5)
+                view!.presentScene(scene!, transition: transition)
+            }
         }
     }
 }

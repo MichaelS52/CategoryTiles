@@ -92,23 +92,9 @@ class GameScene: SKScene {
         let touchedNode = self.nodeAtPoint(positionInScene)
         print("name: ", touchedNode.name)
         if(touchedNode.name == "back"){
-            if let scene = MenuScene(fileNamed:"MenuScene") {
-                // Configure the view.
-                let skView = self.view! as! SKView
-                skView.showsFPS = true
-                skView.showsNodeCount = true
-                skView.showsPhysics = true
-                
-                /* Sprite Kit applies additional optimizations to improve rendering performance */
-                skView.ignoresSiblingOrder = true
-                
-                /* Set the scale mode to scale to fit the window */
-                scene.scaleMode = .AspectFill
-                
-                let transition = SKTransition.moveInWithDirection(.Left, duration: 0.5)
-                skView.presentScene(scene, transition: transition)
-            }
-
+            let scene = MenuScene(fileNamed: "MenuScene")
+            scene?.initialize(cat)
+            view?.presentScene(scene)
         }
         
         for t in tiles{

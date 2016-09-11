@@ -17,15 +17,6 @@
 import SpriteKit
 import CoreMotion
 
-var cat = ""
-var subcat = ""
-
-var words = [String]()
-
-var shelf = [Tile?]()//creates an array, length 7
-var tiles = [Tile]()
-var motionManager = CMMotionManager()
-
 
 class Tile{
     var sprite : SKSpriteNode
@@ -54,6 +45,16 @@ class Tile{
 }
 
 class GameScene: SKScene {
+    
+    var cat = ""
+    var subcat = ""
+    
+    var words = [String]()
+    
+    var shelf = [Tile?]()//creates an array, length 7
+    var tiles = [Tile]()
+    var motionManager = CMMotionManager()
+    
     override func didMoveToView(view: SKView) {
         /* startup function */
         print(self.size.width, " , " , self.size.height)
@@ -372,9 +373,6 @@ class GameScene: SKScene {
     
     func initializeData(wordArr : [String], category : String, subcategory : String){
         print("initializing GameBoard")
-        
-        shelf = [Tile]()
-        tiles = [Tile]()
         
         words = wordArr;
         cat = category;

@@ -12,9 +12,11 @@ import SpriteKit
 class MenuScene: SKScene {
     
     var titles = [TitleNode]()
+    var cat : String = ""
     
-    func initialize(titles: [TitleNode]){
-        self.titles = titles
+    func initialize(cat: String){
+        self.titles = GameData().getGameList(cat)
+        self.cat = cat
     }
     
     override func didMoveToView(view: SKView) {

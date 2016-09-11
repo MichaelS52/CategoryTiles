@@ -43,10 +43,9 @@ class CategoryMenu: SKScene{
         if(touchedNode.name != nil){
             if(touchedNode.name=="title"){
                 let label : SKLabelNode = touchedNode as! SKLabelNode
-                let gameData : [TitleNode] = GameData().getGameList(label.text!)
-                let scale = MenuScene(fileNamed: "MenuScene")
-                scale?.initialize(gameData)
-                self.view?.presentScene(scale)
+                let scene = MenuScene(fileNamed: "MenuScene")
+                scene?.initialize(label.text!)
+                self.view?.presentScene(scene)
             }
         }
     }

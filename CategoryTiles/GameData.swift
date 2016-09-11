@@ -149,7 +149,7 @@ class GameData: NSObject {
                 if (count > 0) {
                     retString = retString + ","
                 }
-                print ("==>\(solItem.answer)")
+                print ("==>\(solItem.answer) - \(done)")
                 retString = retString + solItem.answer!
                 count += 1
                 

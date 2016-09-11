@@ -17,6 +17,7 @@
 import SpriteKit
 import CoreMotion
 
+//IDEAS - make an object, make all the slides childs, then use that to translate it
 
 class Tile{
     var sprite : SKSpriteNode

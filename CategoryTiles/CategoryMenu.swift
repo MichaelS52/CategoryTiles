@@ -31,7 +31,7 @@ class CategoryMenu: SKScene{
  
         let pan = UIPanGestureRecognizer(target: self, action:#selector(CategoryMenu.handlePan(_:)))
         view.addGestureRecognizer(pan)
-
+        
         let categories : [TitleNode] = data.getCategoryList()
         titles = categories
         
@@ -66,6 +66,7 @@ class CategoryMenu: SKScene{
     
     func handleTap(recognizer: UITapGestureRecognizer){
         print ("tap")
+        print("recognizer",recognizer.state)
         let touch = recognizer.locationOfTouch(0, inView: view)
         let touchedNode = self.nodeAtPoint(touch)
         if(touchedNode.name != nil){
@@ -143,10 +144,20 @@ class CategoryMenu: SKScene{
         }
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
+        let first = touches.first!
+        let pos = first.locationInNode(self)
+        let node = self.nodeAtPoint(pos)
+        let sprite = node as! SKSpriteNode
+        sprite.color = UIColor.blackColor()
+        sprite.colorBlendFactor = 0.25
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
+        print("eneded")
+        let array = [UITouch](touches)
+        let pos = array[array.count].locationInNode(self)
+        let node = self.nodeAtPoint(pos)
+        let sprite = node as! SKSpriteNode
+        sprite.colorBlendFactor = 0.0
     }
 }

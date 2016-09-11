@@ -140,7 +140,7 @@ class GameScene: SKScene {
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
-        var swipeDown = UISwipeGestureRecognizer(target: self, action: "swipeHandler:")
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipeHandler(_:)))
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
         self.view?.addGestureRecognizer(swipeDown)
         

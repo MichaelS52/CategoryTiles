@@ -19,17 +19,17 @@ class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        let data = GameData()
-        data.dumpDatabase()
         self.backgroundColor = UIColor.whiteColor()
-        
+        self.size = view.bounds.size
         print("Moved to scene ", titles)
         
-        var count = self.size.height-35
+        var count : CGFloat = self.size.height-35
         for title in titles {
             let label = SKLabelNode(text: title.title)
             label.position = CGPointMake(CGFloat(self.size.width/2), count)
+            label.fontColor = UIColor.blackColor()
             count-=35
+            self.addChild(label)
         }
         
     }
@@ -46,25 +46,10 @@ class MenuScene: SKScene {
             var words : String = touchedNode.userData!.valueForKey("words") as! String
             var wordArr = words.componentsSeparatedByString(",")
             
-            if let scene = GameScene(fileNamed:"GameScene") {
-                // Configure the view.
-                let skView = self.view! as! SKView
-                skView.showsFPS = true
-                skView.showsNodeCount = true
-                skView.showsPhysics = true
-            
-                /* Sprite Kit applies additional optimizations to improve rendering performance */
-                skView.ignoresSiblingOrder = true
-            
-                /* Set the scale mode to scale to fit the window */
-                scene.scaleMode = .AspectFill
-            
-                //modify scene properties
-                scene.initializeData(wordArr, category: cat, subcategory: subcat)
-                
-                let transition = SKTransition.moveInWithDirection(.Right, duration: 0.5)
-                skView.presentScene(scene, transition: transition)
-            }
+            let scene = GameScene(fileNamed:"GameScene")
+            scene!.initializeData(wordArr, category: cat, subcategory: subcat)
+            let transition = SKTransition.moveInWithDirection(.Right, duration: 0.5)
+            view!.presentScene(scene!, transition: transition)
         }
     }
 }

@@ -38,22 +38,15 @@ class CategoryMenu: SKScene{
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first!
-        let data = GameData()
         let positionInScene = touch.locationInNode(self)
         let touchedNode = self.nodeAtPoint(positionInScene)
         if(touchedNode.name != nil){
             if(touchedNode.name=="title"){
-                for title in titles{
-                    if((title.getNode()?.isEqualToNode(touchedNode)) != nil){
-                        let scene = MenuScene(fileNamed: "MenuScene")
-                        let skView = self.view!
-                        let subMenu = data.getGameList(title.title)
-                        print("submenu ",subMenu)
-                        scene!.initialize(subMenu)
-                        skView.presentScene(scene)
-                        return
-                    }
-                }
+                let label : SKLabelNode = touchedNode as! SKLabelNode
+                let gameData : [TitleNode] = GameData().getGameList(label.text!)
+                let scale = MenuScene(fileNamed: "MenuScene")
+                scale?.initialize(gameData)
+                self.view?.presentScene(scale)
             }
         }
     }

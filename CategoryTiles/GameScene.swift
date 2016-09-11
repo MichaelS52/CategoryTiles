@@ -84,14 +84,16 @@ class GameScene: SKScene {
         setupScene()
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch is began */
+        print("touch")
         let touch = touches.first!
         let positionInScene = touch.locationInNode(self)
         
         let touchedNode = self.nodeAtPoint(positionInScene)
         print("name: ", touchedNode.name)
         if(touchedNode.name == "back"){
+            print("Back")
             let scene = MenuScene(fileNamed: "MenuScene")
             scene?.initialize(cat)
             view?.presentScene(scene)
@@ -247,7 +249,8 @@ class GameScene: SKScene {
     
     func remFromShelf(t : Tile){
         t.isDocked=2
-        let pos = shelf.indexOf{$0===t}
+        let pos : Int? = shelf.indexOf{$0===t}
+        if(pos != nil){
         shelf[pos!] = nil
         let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-50)
         
@@ -258,6 +261,7 @@ class GameScene: SKScene {
             t.sprite.physicsBody?.dynamic = true;
             t.isDocked = 0
         })
+        }
     }
     
     func remFromShelfWithoutAnimation(t : Tile){

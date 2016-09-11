@@ -19,34 +19,44 @@ class CategoryMenu: SKScene{
         self.size = view.bounds.size
         
         self.backgroundColor = UIColor.whiteColor()
+        let gesture = UITapGestureRecognizer(target: self, action:Selector("handleTap:"))
+        view.addGestureRecognizer(gesture)
         
         let categories : [TitleNode] = data.getCategoryList()
         titles = categories
         
-        var count : CGFloat = self.size.height-35
+        var count : CGFloat = self.size.height-50
         for title in categories {
-            print("Label - ", title.title, count)
-            let label = SKLabelNode(text: title.title)
-            label.fontColor = UIColor.blackColor()
-            label.position = CGPointMake(CGFloat(self.size.width/2), count)
-            label.name = "title"
-            count-=35
-            title.setNode(label)
-            self.addChild(label)
+            var spriteNode : SKSpriteNode? = nil
+            if(title.title=="Sports"){
+                spriteNode = SKSpriteNode(imageNamed: "sportsbanner.png")
+            }else{
+                spriteNode = SKSpriteNode(imageNamed: "blankbanner.png")
+            }
+            
+            spriteNode!.position = CGPointMake(CGFloat(self.size.width/2), count)
+            spriteNode!.name = title.title
+            count-=90
+            title.setNode(spriteNode!)
+            self.addChild(spriteNode!)
+        }
+    }
+    
+    func handleTap(recognizer: UITapGestureRecognizer){
+        let touch = recognizer.locationOfTouch(0, inView: view)
+        let touchedNode = self.nodeAtPoint(touch)
+        if(touchedNode.name != nil){
+            let scene = MenuScene(fileNamed: "MenuScene")
+            scene?.initialize(touchedNode.name!)
+            self.view?.presentScene(scene)
         }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first!
-        let positionInScene = touch.locationInNode(self)
-        let touchedNode = self.nodeAtPoint(positionInScene)
-        if(touchedNode.name != nil){
-            if(touchedNode.name=="title"){
-                let label : SKLabelNode = touchedNode as! SKLabelNode
-                let scene = MenuScene(fileNamed: "MenuScene")
-                scene?.initialize(label.text!)
-                self.view?.presentScene(scene)
-            }
-        }
+        
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
     }
 }

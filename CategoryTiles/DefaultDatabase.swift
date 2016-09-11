@@ -132,29 +132,46 @@ class DefaultDatabase: NSObject {
         newCat.complete = false
         newCat.id = 1
 
-        /*group1[0] = [[DictionaryEntry alloc] InitPuzzle:@"Football,kick,holding,punt,tackle"];
-        group1[1] = [[DictionaryEntry alloc] InitPuzzle:@"Baseball,base,pitcher,hit,outfield"];
-        group1[2] = [[DictionaryEntry alloc] InitPuzzle:@"Basketball,tipoff,foul,pick,net"];
-        group1[3] = [[DictionaryEntry alloc] InitPuzzle:@"Hockey,penalty,faceoff,puck,goal"];
-        group1[4] = [[DictionaryEntry alloc] InitPuzzle:@"Soccer,kick,offside,header,freekick"];
-        group1[5] = [[DictionaryEntry alloc] InitPuzzle:@"Golf,par,bogey,fairway,bunker"];
-        group1[6] = [[DictionaryEntry alloc] InitPuzzle:@"Bowling,gutter,alley,strike,spare"];
-        group1[6] = [[DictionaryEntry alloc] InitPuzzle:@"Boxing,jab,uppercut,bell,knockout"];
-        group1[7] = [[DictionaryEntry alloc] InitPuzzle:@"Racing,pitstop,draft,fuel,speed"];
-        group1[8] = [[DictionaryEntry alloc] InitPuzzle:@"Lacrosse,box,head,check,pick"];
-        group1[9] = [[DictionaryEntry alloc] InitPuzzle:@"Tennis,deuce,ace,serve,let"];
-        group1[10] = [[DictionaryEntry alloc] InitPuzzle:@"Cricket,bowling,googly,over,wicket"];
-        group1[11] = [[DictionaryEntry alloc] InitPuzzle:@"Rugby,flanker,fend,penalty,scrum"];
-        group1[12] = [[DictionaryEntry alloc] InitPuzzle:@"Volleyball,bump,setter,kill,sideout"];
-*/
         let gameRelation = newCat.valueForKeyPath("game")
         var game = insertGame("Hockey", a1: "puck", a2: "goalie", a3: "stick", a4: "penalty", cat: newCat)
         gameRelation!.addObject(game)
         game = insertGame("Basketball", a1: "rim", a2: "rebound", a3: "zone", a4: "gaurd", cat: newCat)
         gameRelation!.addObject(game)
         
+        game = insertGame("Football", a1: "snap", a2: "tackle", a3: "punt",
+                           a4:"block", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Baseball", a1: "pitcher", a2: "homerun", a3: "outfield",
+                           a4:"strike", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Soccer", a1: "freekick", a2: "header", a3: "offside",
+                           a4:"corner", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Golf", a1: "par", a2: "bogey", a3: "fairway",
+                           a4:"bunker", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Bowling", a1: "gutter", a2: "alley", a3: "spare",
+                           a4:"split", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Auto Racing", a1: "pitstop", a2: "draft", a3: "fuel",
+                           a4:"speed", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Lacrosse", a1: "box", a2: "head", a3: "check",
+                           a4:"pick", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Tennis", a1: "deuce", a2: "ace", a3: "serve",
+                           a4:"let", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Cricket", a1: "bowling", a2: "googly", a3: "over",
+                           a4:"wicket", cat: newCat)
+        gameRelation!.addObject(game)
+        game = insertGame("Volleyball", a1: "bump", a2: "setter", a3: "kill",
+                           a4:"serve", cat: newCat)
+        gameRelation!.addObject(game)
+        
         insertTestCategories()
     }
+
     func insertGame (title:String, a1:String, a2:String, a3: String, a4:String, cat:Category) -> Game {
         //var manyRelation = myObject.valueForKeyPath("subObjects") as NSMutableSet
         //manyRelation.addObject(subObject)

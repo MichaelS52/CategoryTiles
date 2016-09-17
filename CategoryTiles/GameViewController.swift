@@ -12,9 +12,11 @@ import SpriteKit
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
+        print ("gameviewcontroller - 1");
         super.viewDidLoad()
-
-        if let scene = GameScene(fileNamed:"GameScene") {
+        print ("gameviewcontroller - 2");
+        
+        if let scene = CategoryMenu(fileNamed:"CategoryMenu") {
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -28,6 +30,8 @@ class GameViewController: UIViewController {
             scene.scaleMode = .aspectFill
             
             skView.presentScene(scene)
+        } else {
+            print ("NOPE")
         }
     }
 

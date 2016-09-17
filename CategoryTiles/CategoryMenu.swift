@@ -22,6 +22,7 @@ class CategoryMenu: SKScene{
     var bottomSpring: CGFloat = 0
     
     override func didMove(to view: SKView) {
+        print ("category menu moved to view")
         let data = GameData()
         self.size = view.bounds.size
         

@@ -66,7 +66,7 @@ class GameScene: SKScene {
             for ch in characters{
                 let t : Tile = createTile(String(ch));
                 t.word = text
-                let inner = UInt32(20)
+                //let inner = UInt32(20)
                 let randX = 100//randomNumber(inner, max: UInt32(frame.width)-inner)
                 let randY = 100//randomNumber(inner, max: UInt32(frame.height/2)-inner)
                 let randomRotation = arc4random_uniform(360)

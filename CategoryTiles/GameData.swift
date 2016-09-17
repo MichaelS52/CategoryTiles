@@ -44,9 +44,9 @@ class GameData: NSObject {
     override init() {
         
         super.init()
-        
-        let fReq: NSFetchRequest = NSFetchRequest(entityName: "Category")
+        let fReq: NSFetchRequest<Category> = Category.fetchRequest() as! NSFetchRequest<Category>
         do {
+            
             let result = try managedObjectContext!.fetch(fReq)
             
             print(result.count)
@@ -83,13 +83,12 @@ class GameData: NSObject {
     }
     
     func getCategoryList() -> [TitleNode] {
-        let fetchReq = NSFetchRequest(entityName: "Category")
         var titles:[TitleNode] = []
-        
+        let fetchReq: NSFetchRequest<Category> = Category.fetchRequest() as! NSFetchRequest<Category>
         do {
             let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
-                let catItem = resultItem as! Category
+                let catItem = resultItem
                 var done = false
                 if (catItem.complete == true) {
                     done = true
@@ -106,14 +105,14 @@ class GameData: NSObject {
     }
     
     func getGameList(_ category:String) -> [TitleNode] {
-        let fetchReq = NSFetchRequest(entityName: "Game")
+        let fetchReq: NSFetchRequest<Game> = Game.fetchRequest() as! NSFetchRequest<Game>
         fetchReq.predicate = NSPredicate(format: "category.title = %@", category)
         var titles:[TitleNode] = []
         
         do {
             let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
-                let catItem = resultItem as! Game
+                let catItem = resultItem 
                 var done = false
                 if (catItem.complete == true) {
                     done = true
@@ -131,7 +130,7 @@ class GameData: NSObject {
     
     func getPuzzle(_ category:String, game: String) -> String {
         print ("getPuzzle \(category) \(game)")
-        let fetchReq = NSFetchRequest(entityName: "Solution")
+        let fetchReq: NSFetchRequest<Solution> = Solution.fetchRequest() as! NSFetchRequest<Solution>
         fetchReq.predicate = NSPredicate(format: "game.title = %@ AND game.category.title = %@",
                                          game, category)
         // var titles:[TitleNode] = []
@@ -141,7 +140,7 @@ class GameData: NSObject {
         do {
             let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
-                let solItem = resultItem as! Solution
+                let solItem = resultItem
                 var done = false
                 if (solItem.complete == true) {
                     done = true
@@ -165,19 +164,19 @@ class GameData: NSObject {
     }
 
     func dumpDatabase() {
-        var fetchReq = NSFetchRequest(entityName: "Category")
+        let fetchReq: NSFetchRequest<Category> = Category.fetchRequest() as! NSFetchRequest<Category>
         //fetchReq.predicate = NSPredicate(format:"ANY")
         do {
             let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
-                let catItem = resultItem as! Category
+                let catItem = resultItem
                 print ("category = \(catItem.title)")
-                fetchReq = NSFetchRequest(entityName: "Game")
-                fetchReq.predicate = NSPredicate(format: "category.title = %@", catItem.title!)
+                let fetchReqGame: NSFetchRequest<Game> = Game.fetchRequest() as! NSFetchRequest<Game>
+                fetchReqGame.predicate = NSPredicate(format: "category.title = %@", catItem.title!)
                 do {
-                    let result2 = try managedObjectContext!.fetch(fetchReq)
+                    let result2 = try managedObjectContext!.fetch(fetchReqGame)
                     for resultItem2 in result2  {
-                        let gameItem = resultItem2 as! Game
+                        let gameItem = resultItem2 
                         print ("game = \(gameItem.title)")
                     }
                 }

@@ -147,7 +147,6 @@
 				F10ADE7E1D7BC42C009CDAC9 /* GameScene.swift */,
 				F10ADE801D7BC42C009CDAC9 /* GameViewController.swift */,
 				F10ADE821D7BC42C009CDAC9 /* Main.storyboard */,
-				F10ADE851D7BC42C009CDAC9 /* Assets.xcassets */,
 				F10ADE871D7BC42C009CDAC9 /* LaunchScreen.storyboard */,
 				F10ADE8A1D7BC42C009CDAC9 /* Info.plist */,
 				F7A3160F1D8182AE0061FFF8 /* GameData.xcdatamodeld */,
@@ -159,6 +158,7 @@
 				F77790DB1D84452F00260570 /* Solution.swift */,
 				F77790DC1D84452F00260570 /* Category+CoreDataProperties.swift */,
 				F77790DD1D84452F00260570 /* Category.swift */,
+				F10ADE851D7BC42C009CDAC9 /* Assets.xcassets */,
 				F7C509891D845E1700D40457 /* Sports1.swift */,
 			);
 			path = CategoryTiles;

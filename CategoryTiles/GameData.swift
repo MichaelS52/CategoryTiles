@@ -22,7 +22,7 @@ class TitleNode {
         self.sprite = nil
     }
     
-    func setNode(sprite: SKNode){
+    func setNode(_ sprite: SKNode){
         self.sprite = sprite
     }
     func getNode() -> SKNode?{
@@ -38,7 +38,7 @@ class TitleNode {
 
 class GameData: NSObject {
     
-    let managedObjectContext = (UIApplication.sharedApplication().delegate
+    let managedObjectContext = (UIApplication.shared.delegate
         as! AppDelegate).managedObjectContext
     
     override init() {
@@ -47,7 +47,7 @@ class GameData: NSObject {
         
         let fReq: NSFetchRequest = NSFetchRequest(entityName: "Category")
         do {
-            let result = try managedObjectContext!.executeFetchRequest(fReq)
+            let result = try managedObjectContext!.fetch(fReq)
             
             print(result.count)
             
@@ -87,7 +87,7 @@ class GameData: NSObject {
         var titles:[TitleNode] = []
         
         do {
-            let result = try managedObjectContext!.executeFetchRequest(fetchReq)
+            let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
                 let catItem = resultItem as! Category
                 var done = false
@@ -105,13 +105,13 @@ class GameData: NSObject {
         return titles
     }
     
-    func getGameList(category:String) -> [TitleNode] {
+    func getGameList(_ category:String) -> [TitleNode] {
         let fetchReq = NSFetchRequest(entityName: "Game")
         fetchReq.predicate = NSPredicate(format: "category.title = %@", category)
         var titles:[TitleNode] = []
         
         do {
-            let result = try managedObjectContext!.executeFetchRequest(fetchReq)
+            let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
                 let catItem = resultItem as! Game
                 var done = false
@@ -129,7 +129,7 @@ class GameData: NSObject {
         return titles
     }
     
-    func getPuzzle(category:String, game: String) -> String {
+    func getPuzzle(_ category:String, game: String) -> String {
         print ("getPuzzle \(category) \(game)")
         let fetchReq = NSFetchRequest(entityName: "Solution")
         fetchReq.predicate = NSPredicate(format: "game.title = %@ AND game.category.title = %@",
@@ -139,7 +139,7 @@ class GameData: NSObject {
         var count = 0
 
         do {
-            let result = try managedObjectContext!.executeFetchRequest(fetchReq)
+            let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
                 let solItem = resultItem as! Solution
                 var done = false
@@ -168,14 +168,14 @@ class GameData: NSObject {
         var fetchReq = NSFetchRequest(entityName: "Category")
         //fetchReq.predicate = NSPredicate(format:"ANY")
         do {
-            let result = try managedObjectContext!.executeFetchRequest(fetchReq)
+            let result = try managedObjectContext!.fetch(fetchReq)
             for resultItem in result  {
                 let catItem = resultItem as! Category
                 print ("category = \(catItem.title)")
                 fetchReq = NSFetchRequest(entityName: "Game")
                 fetchReq.predicate = NSPredicate(format: "category.title = %@", catItem.title!)
                 do {
-                    let result2 = try managedObjectContext!.executeFetchRequest(fetchReq)
+                    let result2 = try managedObjectContext!.fetch(fetchReq)
                     for resultItem2 in result2  {
                         let gameItem = resultItem2 as! Game
                         print ("game = \(gameItem.title)")

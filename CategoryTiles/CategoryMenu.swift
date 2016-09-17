@@ -21,11 +21,11 @@ class CategoryMenu: SKScene{
     var topSpring: CGFloat = 0
     var bottomSpring: CGFloat = 0
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         let data = GameData()
         self.size = view.bounds.size
         
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         let tap = UITapGestureRecognizer(target: self, action:#selector(CategoryMenu.handleTap(_:)))
         view.addGestureRecognizer(tap)
  
@@ -45,7 +45,7 @@ class CategoryMenu: SKScene{
                 spriteNode = SKSpriteNode(imageNamed: "blankbanner.png")
             }
             
-            spriteNode!.position = CGPointMake(CGFloat(self.size.width/2), count)
+            spriteNode!.position = CGPoint(x: CGFloat(self.size.width/2), y: count)
             spriteNode!.name = title.title
             if (topLimit  == 0) {
                 topLimit = count
@@ -64,14 +64,14 @@ class CategoryMenu: SKScene{
         bottomSpring = bottomLimit + 50
     }
     
-    func handleTap(recognizer: UITapGestureRecognizer){
+    func handleTap(_ recognizer: UITapGestureRecognizer){
         print("recognizer",recognizer.state)
-        if recognizer.state == .Ended {
+        if recognizer.state == .ended {
             clearTouchHighlight()
-            var touchLocation: CGPoint = recognizer.locationInView(recognizer.view)
-            touchLocation = self.convertPointFromView(touchLocation)
+            var touchLocation: CGPoint = recognizer.location(in: recognizer.view)
+            touchLocation = self.convertPoint(fromView: touchLocation)
             //let touch = recognizer.locationOfTouch(0, inView: self.view)
-            let touchedNode = self.nodeAtPoint(touchLocation)
+            let touchedNode = self.atPoint(touchLocation)
             print ("touch: \(touchLocation.x) - \(touchLocation.y)")
             print ("tap \(touchedNode.name)")
             if(touchedNode.name != nil) {
@@ -82,27 +82,27 @@ class CategoryMenu: SKScene{
         }
     }
     
-    func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
+    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         clearTouchHighlight()
-        if gestureRecognizer.state == UIGestureRecognizerState.Began {
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
             //let translation = gestureRecognizer.translationInView(self.view)
             //print ("start:\(translation.y)")
             lastScroll = 0.0
         }
-        if gestureRecognizer.state == UIGestureRecognizerState.Changed {
-            let translation = gestureRecognizer.translationInView(self.view)
+        if gestureRecognizer.state == UIGestureRecognizerState.changed {
+            let translation = gestureRecognizer.translation(in: self.view)
             //print ("pan:  \(translation.y)")
             // note: 'view' is optional and need to be unwrapped
             
             scrollTitles(translation.y - lastScroll)
             lastScroll = translation.y
         }
-        if gestureRecognizer.state == UIGestureRecognizerState.Ended {
+        if gestureRecognizer.state == UIGestureRecognizerState.ended {
             scrollSpring()
         }
     }
     
-    func scrollTitles(y: CGFloat) {
+    func scrollTitles(_ y: CGFloat) {
         let lastTop = listTop
         let lastBottom = listBottom
         
@@ -154,35 +154,35 @@ class CategoryMenu: SKScene{
     func clearTouchHighlight() {
         for title in titles {
             let spriteNode = title.getNode() as! SKSpriteNode
-            spriteNode.color = UIColor.blackColor()
+            spriteNode.color = UIColor.black
             spriteNode.colorBlendFactor = 0.0
         }
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let first = touches.first!
-        let pos = first.locationInNode(self)
+        let pos = first.location(in: self)
         print ("touch began: \(pos.x) - \(pos.y)")
-        let node = self.nodeAtPoint(pos)
+        let node = self.atPoint(pos)
         let sprite = node as? SKSpriteNode
         if (sprite != nil) {
-            sprite!.color = UIColor.blackColor()
+            sprite!.color = UIColor.black
             sprite!.colorBlendFactor = 0.25
         }
     }
 
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         clearTouchHighlight()
         let first = touches.first!
-        let pos = first.locationInNode(self)
+        let pos = first.location(in: self)
         print ("touch moved: \(pos.x) - \(pos.y)")
-        let node = self.nodeAtPoint(pos)
+        let node = self.atPoint(pos)
         let sprite = node as? SKSpriteNode
         if (sprite != nil) {
-            sprite!.color = UIColor.blackColor()
+            sprite!.color = UIColor.black
             sprite!.colorBlendFactor = 0.25
         }
     }
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         print ("touches ended")
         clearTouchHighlight()
     }

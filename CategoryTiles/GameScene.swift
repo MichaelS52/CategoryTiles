@@ -40,7 +40,7 @@ class Tile{
         print("sprite: ",self.sprite.hash)
     }
     
-    func setSlot(sprite : SKSpriteNode){
+    func setSlot(_ sprite : SKSpriteNode){
         self.slot = sprite
     }
 }
@@ -56,7 +56,7 @@ class GameScene: SKScene {
     var tiles = [Tile]()
     var motionManager = CMMotionManager()
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* startup function */
         print(self.size.width, " , " , self.size.height)
         self.size = view.bounds.size //set the size to the view size
@@ -67,41 +67,41 @@ class GameScene: SKScene {
                 let t : Tile = createTile(String(ch));
                 t.word = text
                 let inner = UInt32(20)
-                let randX = randomNumber(inner, max: UInt32(frame.width)-inner)
-                let randY = randomNumber(inner, max: UInt32(frame.height/2)-inner)
+                let randX = 100//randomNumber(inner, max: UInt32(frame.width)-inner)
+                let randY = 100//randomNumber(inner, max: UInt32(frame.height/2)-inner)
                 let randomRotation = arc4random_uniform(360)
                 
-                t.sprite.position = CGPointMake(CGFloat(randX), CGFloat(randY))
+                t.sprite.position = CGPoint(x: CGFloat(randX), y: CGFloat(randY))
                 t.sprite.zRotation = CGFloat(randomRotation)
             }
         }
         
         let shelfBase = SKLabelNode(text: "__  __  __  __  __  __  __")
-        shelfBase.fontColor = UIColor.blackColor()
+        shelfBase.fontColor = UIColor.black
         shelfBase.fontSize = 30
-        shelfBase.position = CGPointMake(CGFloat(self.size.width/2), CGFloat(self.size.height/10)*6)
+        shelfBase.position = CGPoint(x: CGFloat(self.size.width/2), y: CGFloat(self.size.height/10)*6)
         addChild(shelfBase)
         
         setupScene()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch is began */
         print("touch")
         let touch = touches.first!
-        let positionInScene = touch.locationInNode(self)
+        let positionInScene = touch.location(in: self)
         
-        let touchedNode = self.nodeAtPoint(positionInScene)
+        let touchedNode = self.atPoint(positionInScene)
         print("name: ", touchedNode.name)
         if(touchedNode.name == "back"){
             print("Back")
-            let scene = MenuScene(fileNamed: "MenuScene")
-            scene?.initialize(cat)
-            view?.presentScene(scene)
+            //let scene = MenuScene(fileNamed: "MenuScene")
+            //scene?.initialize(cat)
+            //view?.presentScene(scene)
         }
         
         for t in tiles{
-            if(touchedNode.isEqualToNode(t.sprite)){
+            if(touchedNode.isEqual(to: t.sprite)){
                 if(t.isDocked==1){
                     remFromShelf(t)
                 }else if(t.isDocked==0){
@@ -113,19 +113,19 @@ class GameScene: SKScene {
         }
     }
    
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
         if let accData = motionManager.accelerometerData{
             physicsWorld.gravity = CGVector(dx: accData.acceleration.x * 2, dy: accData.acceleration.y * 2)
         }
     }
     
-    func createTile(letter : String) -> Tile{
+    func createTile(_ letter : String) -> Tile{
         let tileFile = letter + ".png"
         let sprite = SKSpriteNode(imageNamed: tileFile)
-        sprite.position = CGPointMake(frame.size.width/2,frame.size.height/2)
-        sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
-        sprite.physicsBody?.dynamic = true
+        sprite.position = CGPoint(x: frame.size.width/2,y: frame.size.height/2)
+        sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+        sprite.physicsBody?.isDynamic = true
         sprite.zPosition=5
         self.addChild(sprite)
         
@@ -137,39 +137,39 @@ class GameScene: SKScene {
     func setupScene(){
         addFinishedSlots()
         let rect : CGRect = CGRect(x: 0, y: 0, width: frame.width, height: (frame.height/10)*6)
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: rect)
         self.physicsBody?.restitution=0.25 //adds slight bounciness
         motionManager.startAccelerometerUpdates()
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipeHandler(_:)))
-        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
         self.view?.addGestureRecognizer(swipeDown)
         
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         
         
         let back = SKSpriteNode(imageNamed: "back.png")
-        back.position = CGPointMake(20, frame.height-20)
+        back.position = CGPoint(x: 20, y: frame.height-20)
         back.setScale(0.040)
         back.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(20))
-        back.physicsBody?.dynamic=false
+        back.physicsBody?.isDynamic=false
         back.name = "back"
         addChild(back)
         
         let labelText = cat + " / " + subcat
         let catLabel = SKLabelNode(text: labelText)
         catLabel.fontSize = 25
-        catLabel.fontColor=UIColor.blackColor()
+        catLabel.fontColor=UIColor.black
         
-        catLabel.position = CGPointMake(frame.size.width/2, frame.size.height-30)
+        catLabel.position = CGPoint(x: frame.size.width/2, y: frame.size.height-30)
         addChild(catLabel)
     }
     
-    func swipeHandler(gesture: UIGestureRecognizer){
+    func swipeHandler(_ gesture: UIGestureRecognizer){
         clearShelf()
     }
     
     //Shelf functions
-    func addToShelf(t : Tile){
+    func addToShelf(_ t : Tile){
         t.isDocked=2 //make it not touchable
         let firstEmpty = getFirstShelfEmpty();
         if(firstEmpty == -1){
@@ -178,36 +178,36 @@ class GameScene: SKScene {
             shelf[firstEmpty] = t
         }
         
-        let pos = shelf.indexOf{$0===t} //Gets position of the letter in the array
-        var start : CGPoint = CGPointMake((view?.bounds.width)!/7-5,((view?.bounds.height)!/10)*6+20)
+        let pos = shelf.index{$0===t} //Gets position of the letter in the array
+        var start : CGPoint = CGPoint(x: (view?.bounds.width)!/7-5,y: ((view?.bounds.height)!/10)*6+20)
         start.x+=CGFloat((pos)!*46) //20 is that difference between underlines?
         
         
         /* Total transformations to add to the shelf */
-        let scaleUp = SKAction.scaleTo(1.3, duration: 0.2)
-        let translate = SKAction.moveTo(start, duration: 0.4)
-        let rotation = SKAction.rotateToAngle(0, duration: 0.4)
+        let scaleUp = SKAction.scale(to: 1.3, duration: 0.2)
+        let translate = SKAction.move(to: start, duration: 0.4)
+        let rotation = SKAction.rotate(toAngle: 0, duration: 0.4)
         let transformation = SKAction.group([translate,rotation])
-        let scaleDown = SKAction.scaleTo(1, duration: 0.1)
+        let scaleDown = SKAction.scale(to: 1, duration: 0.1)
         
         t.sprite.physicsBody?.affectedByGravity = false
-        t.sprite.physicsBody?.dynamic = false
+        t.sprite.physicsBody?.isDynamic = false
         t.sprite.physicsBody = nil
         
-        t.sprite.runAction(SKAction.sequence([scaleUp,transformation,scaleDown]),completion: {
+        t.sprite.run(SKAction.sequence([scaleUp,transformation,scaleDown]),completion: {
             t.isDocked = 1
             self.checkShelf()
         })
     }
     
-    func sendToSlot(t : Tile){
+    func sendToSlot(_ t : Tile){
         if(t.slot != nil){
             t.sprite.zPosition = 10 //put it on top so its not under any during animation
-            let scaleDown = SKAction.scaleTo(0.5, duration: 1)
-            let translate = SKAction.moveTo(t.slot!.position, duration: 1)
+            let scaleDown = SKAction.scale(to: 0.5, duration: 1)
+            let translate = SKAction.move(to: t.slot!.position, duration: 1)
             let transformation = SKAction.group([scaleDown,translate])
             
-            t.sprite.runAction(transformation,completion: {
+            t.sprite.run(transformation,completion: {
                 t.isDocked=2
                 t.sprite.zPosition = 5 //put it back under
             })
@@ -238,9 +238,9 @@ class GameScene: SKScene {
         }
     }
     
-    func addEmptySlot(x : CGFloat, y : CGFloat) -> SKSpriteNode{
+    func addEmptySlot(_ x : CGFloat, y : CGFloat) -> SKSpriteNode{
         let empty = SKSpriteNode(imageNamed: "slot.png")
-        empty.position = CGPointMake(x, y)
+        empty.position = CGPoint(x: x, y: y)
         empty.setScale(CGFloat(0.5))
         empty.zPosition = 0
         print("Adding slot: ", x, " ", y)
@@ -248,25 +248,25 @@ class GameScene: SKScene {
         return empty
     }
     
-    func remFromShelf(t : Tile){
+    func remFromShelf(_ t : Tile){
         t.isDocked=2
-        let pos : Int? = shelf.indexOf{$0===t}
+        let pos : Int? = shelf.index{$0===t}
         if(pos != nil){
         shelf[pos!] = nil
-        let target = CGPointMake(t.sprite.position.x, t.sprite.position.y-50)
+        let target = CGPoint(x: t.sprite.position.x, y: t.sprite.position.y-50)
         
-        let translate = SKAction.moveTo(target, duration: 0.3)
-        t.sprite.runAction(translate, completion: {
-            t.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: t.sprite.size)
+        let translate = SKAction.move(to: target, duration: 0.3)
+        t.sprite.run(translate, completion: {
+            t.sprite.physicsBody = SKPhysicsBody(rectangleOf: t.sprite.size)
             t.sprite.physicsBody?.affectedByGravity = true;
-            t.sprite.physicsBody?.dynamic = true;
+            t.sprite.physicsBody?.isDynamic = true;
             t.isDocked = 0
         })
         }
     }
     
-    func remFromShelfWithoutAnimation(t : Tile){
-        let pos = shelf.indexOf{$0===t}
+    func remFromShelfWithoutAnimation(_ t : Tile){
+        let pos = shelf.index{$0===t}
         shelf[pos!] = nil
     }
     
@@ -341,7 +341,7 @@ class GameScene: SKScene {
         }
     }
     
-    func getATileFromWord(word : String, letter : String) -> Tile? {
+    func getATileFromWord(_ word : String, letter : String) -> Tile? {
         print("looking for letter :", word, letter)
         for tile in tiles{
             if(tile.word == word){
@@ -355,14 +355,14 @@ class GameScene: SKScene {
         return nil;
     }
     
-    func randomNumber(min : UInt32, max : UInt32) -> CGFloat{
+    func randomNumber(_ min : UInt32, max : UInt32) -> CGFloat{
         print("min ", min)
         print("max ", max)
         let randomNumber = arc4random_uniform(max-min)+min
         return CGFloat(randomNumber)
     }
     
-    func initializeData(wordArr : [String], category : String, subcategory : String){
+    func initializeData(_ wordArr : [String], category : String, subcategory : String){
         print("initializing GameBoard")
         
         words = wordArr;

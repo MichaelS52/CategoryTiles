@@ -20,6 +20,9 @@
 		F1A7D80B1D7F5C8A0010A1E4 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */; };
 		F1A7D80D1D84E9FF0010A1E4 /* CategoryMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1A7D80C1D84E9FF0010A1E4 /* CategoryMenu.sks */; };
 		F1A7D80F1D84EA180010A1E4 /* CategoryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7D80E1D84EA180010A1E4 /* CategoryMenu.swift */; };
+		F1F910A31D8CD6E100DF4799 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F910A21D8CD6E100DF4799 /* CategoryView.swift */; };
+		F1F910A51D8CD6E800DF4799 /* SubCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F910A41D8CD6E800DF4799 /* SubCategoryView.swift */; };
+		F1F910A71D8CD6ED00DF4799 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F910A61D8CD6ED00DF4799 /* CustomCell.swift */; };
 		F76730BF1D825EEF00607321 /* DefaultDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76730B81D825EEF00607321 /* DefaultDatabase.swift */; };
 		F77790DE1D84452F00260570 /* Game+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77790D81D84452F00260570 /* Game+CoreDataProperties.swift */; };
 		F77790DF1D84452F00260570 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77790D91D84452F00260570 /* Game.swift */; };
@@ -69,6 +72,9 @@
 		F1A7D80A1D7F5C8A0010A1E4 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		F1A7D80C1D84E9FF0010A1E4 /* CategoryMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CategoryMenu.sks; sourceTree = "<group>"; };
 		F1A7D80E1D84EA180010A1E4 /* CategoryMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryMenu.swift; sourceTree = "<group>"; };
+		F1F910A21D8CD6E100DF4799 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryView.swift; path = ../../TitleMenuv2/TitleMenuv2/CategoryView.swift; sourceTree = "<group>"; };
+		F1F910A41D8CD6E800DF4799 /* SubCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubCategoryView.swift; path = ../../TitleMenuv2/TitleMenuv2/SubCategoryView.swift; sourceTree = "<group>"; };
+		F1F910A61D8CD6ED00DF4799 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell.swift; path = ../../TitleMenuv2/TitleMenuv2/CustomCell.swift; sourceTree = "<group>"; };
 		F76730B81D825EEF00607321 /* DefaultDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultDatabase.swift; sourceTree = "<group>"; };
 		F77790D81D84452F00260570 /* Game+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Game+CoreDataProperties.swift"; path = "../Game+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F77790D91D84452F00260570 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = ../Game.swift; sourceTree = "<group>"; };
@@ -136,6 +142,9 @@
 				F10ADE7A1D7BC42C009CDAC9 /* AppDelegate.swift */,
 				F10ADE7C1D7BC42C009CDAC9 /* GameScene.sks */,
 				F10ADE7E1D7BC42C009CDAC9 /* GameScene.swift */,
+				F1F910A21D8CD6E100DF4799 /* CategoryView.swift */,
+				F1F910A41D8CD6E800DF4799 /* SubCategoryView.swift */,
+				F1F910A61D8CD6ED00DF4799 /* CustomCell.swift */,
 				F10ADE801D7BC42C009CDAC9 /* GameViewController.swift */,
 				F10ADE821D7BC42C009CDAC9 /* Main.storyboard */,
 				F10ADE851D7BC42C009CDAC9 /* Assets.xcassets */,
@@ -242,13 +251,16 @@
 					F10ADE761D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 66PDD578N7;
+						LastSwiftMigration = 0800;
 					};
 					F10ADE8E1D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = F10ADE761D7BC42C009CDAC9;
 					};
 					F10ADE991D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = F10ADE761D7BC42C009CDAC9;
 					};
 				};
@@ -312,12 +324,15 @@
 				F77790E21D84452F00260570 /* Category+CoreDataProperties.swift in Sources */,
 				F77790E31D84452F00260570 /* Category.swift in Sources */,
 				F77790DF1D84452F00260570 /* Game.swift in Sources */,
+				F1F910A71D8CD6ED00DF4799 /* CustomCell.swift in Sources */,
 				F7C5098A1D845E1700D40457 /* Sports1.swift in Sources */,
 				F1A7D80F1D84EA180010A1E4 /* CategoryMenu.swift in Sources */,
+				F1F910A31D8CD6E100DF4799 /* CategoryView.swift in Sources */,
 				F7A316111D8182AE0061FFF8 /* GameData.xcdatamodeld in Sources */,
 				F7A3160E1D8182A20061FFF8 /* GameData.swift in Sources */,
 				F1A7D8071D7F5A820010A1E4 /* MenuScene.swift in Sources */,
 				F77790E11D84452F00260570 /* Solution.swift in Sources */,
+				F1F910A51D8CD6E800DF4799 /* SubCategoryView.swift in Sources */,
 				F77790DE1D84452F00260570 /* Game+CoreDataProperties.swift in Sources */,
 				F10ADE811D7BC42C009CDAC9 /* GameViewController.swift in Sources */,
 				F10ADE7B1D7BC42C009CDAC9 /* AppDelegate.swift in Sources */,
@@ -471,6 +486,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -485,6 +501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -497,6 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTilesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CategoryTiles.app/CategoryTiles";
 			};
 			name = Debug;
@@ -509,6 +527,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTilesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CategoryTiles.app/CategoryTiles";
 			};
 			name = Release;
@@ -521,6 +540,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTilesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CategoryTiles;
 				USES_XCTRUNNER = YES;
 			};
@@ -533,6 +553,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTilesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CategoryTiles;
 				USES_XCTRUNNER = YES;
 			};

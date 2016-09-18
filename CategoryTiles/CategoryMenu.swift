@@ -27,8 +27,9 @@ class CategoryMenu: SKScene{
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         print ("categoryMenu didmove")
         let table = CategoryView()
-        let smallerRect = CGRect(x:100, y:100, width:200, height:100)
-        let navRect = CGRect(x:0, y:0, width:200, height:200)
+        
+        let smallerRect = CGRect(x:0, y:0, width:view.bounds.size.width, height:view.bounds.size.height)
+        let navRect = CGRect(x:0, y:0, width:view.bounds.size.width, height:view.bounds.size.height)
         let nav = UINavigationController(rootViewController: table)
         nav.view.frame = navRect
         

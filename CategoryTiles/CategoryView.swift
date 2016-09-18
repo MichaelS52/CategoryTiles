@@ -7,37 +7,45 @@
 //
 
 import UIKit
-
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    @IBOutlet var tableView: UITableView!
+class CategoryView: UITableViewController {
     
+    var names = ["name1", "name2", "name3"]
     var cats = ["Sports"]
     var images = [UIImage(named: "sportssquare")]
-    
+
+    //let customCell = CustomCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+        
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        tableView.register(CustomCell.self, forCellReuseIdentifier: "cell")
+        
+    }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cats.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
         
-        cell.label.text = cats[indexPath.row]
-        cell.photo.image = images[indexPath.row]
+        //cell.label.text = "test"
+        
+        
+        //cell.photo.image = images[indexPath.row]
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         return cell
+
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print ("select \(indexPath)")
+    }
 
 }
+
 

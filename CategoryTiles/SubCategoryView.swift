@@ -17,6 +17,7 @@ class SubCategoryView: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
+        print ("subcategory view")
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }

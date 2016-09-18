@@ -30,9 +30,10 @@ class CustomCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        print ("set selected")
         super.layoutSubviews()
         
-        myLabel.frame = CGRect(x: 20, y: 0, width: 70, height: 30)
+        //myLabel.frame = CGRect(x: 20, y: 0, width: 70, height: 30)
     }
 }
 

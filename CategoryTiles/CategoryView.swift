@@ -33,11 +33,11 @@ class CategoryView: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
         
-        //cell.label.text = "test"
+        cell.myLabel.text = "test"
         //cell.label.text = cats[indexPath.row]
         //cell.photo.image = images[indexPath.row]
         
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        //cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         return cell
 
     }
@@ -45,7 +45,9 @@ class CategoryView: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print ("select \(indexPath)")
     }
-
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        print ("tapped \(indexPath)")
+    }
 }
 
 

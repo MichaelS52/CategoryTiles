@@ -21,25 +21,18 @@ class CategoryMenu: SKScene{
     var topSpring: CGFloat = 0
     var bottomSpring: CGFloat = 0
     
-    var tableView: UITableView = UITableView()
-
+    var tableView : UITableView!
+    
     override func didMove(to view: SKView) {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         print ("categoryMenu didmove")
-        let table = CategoryView()
+        let customTable = CategoryView()
         
-        let smallerRect = CGRect(x:0, y:0, width:view.bounds.size.width, height:view.bounds.size.height)
-        let navRect = CGRect(x:0, y:0, width:view.bounds.size.width, height:view.bounds.size.height)
-        let nav = UINavigationController(rootViewController: table)
-        nav.view.frame = navRect
+        tableView = UITableView(frame: CGRect(x: 0, y: 40, width: self.view!.frame.size.width, height: self.view!.frame.size.height-40), style: UITableViewStyle.grouped)
+        tableView.delegate = customTable
+        tableView.dataSource = customTable
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        let frameView = UIView(frame: smallerRect)
-        frameView.backgroundColor = UIColor.red
-        table.view.frame = frameView.bounds
-        
-        frameView.addSubview(nav.view)
-        self.view?.addSubview(frameView)
-        
-        
+        self.view?.addSubview(tableView)
     }
 }

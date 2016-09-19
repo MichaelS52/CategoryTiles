@@ -250,7 +250,7 @@
 				TargetAttributes = {
 					F10ADE761D7BC42C009CDAC9 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 5262L6L6LF;
+						DevelopmentTeam = 66PDD578N7;
 						LastSwiftMigration = 0800;
 					};
 					F10ADE8E1D7BC42C009CDAC9 = {
@@ -486,10 +486,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5262L6L6LF;
+				DEVELOPMENT_TEAM = 66PDD578N7;
 				INFOPLIST_FILE = CategoryTiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sylva.CategoryTiles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
@@ -502,10 +502,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5262L6L6LF;
+				DEVELOPMENT_TEAM = 66PDD578N7;
 				INFOPLIST_FILE = CategoryTiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sylva.CategoryTiles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michael.CategoryTiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;

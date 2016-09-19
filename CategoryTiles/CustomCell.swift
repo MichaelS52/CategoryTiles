@@ -15,7 +15,6 @@ class CustomCell: UITableViewCell {
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
-            myLabel.backgroundColor = UIColor.yellow
             self.contentView.addSubview(myLabel)
         }
         
@@ -27,6 +26,10 @@ class CustomCell: UITableViewCell {
             super.layoutSubviews()
             
             myLabel.frame = CGRect(x: 20, y: 0, width: 70, height: 30)
+    }
+    
+    override func prepareForReuse() {
+        //myLabel.
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

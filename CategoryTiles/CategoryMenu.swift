@@ -21,6 +21,9 @@ class CategoryMenu: SKScene{
     var topSpring: CGFloat = 0
     var bottomSpring: CGFloat = 0
     
+    var scrollBarNode: SKSpriteNode? = nil
+    var scrollBarRatio: CGFloat = 0.0
+
     override func didMove(to view: SKView) {
         let data = GameData()
         self.size = view.bounds.size
@@ -62,6 +65,20 @@ class CategoryMenu: SKScene{
         }
         topSpring = topLimit - 50
         bottomSpring = bottomLimit + 50
+        
+        // Add the scroll bar
+        scrollBarRatio = self.size.height/(listTop - listBottom)
+        print ("\(listTop), \(listBottom), \(self.size.height)")
+        print ("scrollBarRatio: \(scrollBarRatio)")
+        let scrollHeight = self.size.height*scrollBarRatio
+        scrollBarNode = SKSpriteNode(color: SKColor.black, size: CGSize(width:5, height:scrollHeight))
+        let scrollY = self.size.height - scrollHeight
+        scrollBarNode?.anchorPoint = CGPoint(x:2.0, y:0.0)
+        scrollBarNode?.position = CGPoint(x: self.size.width, y: scrollY)
+        scrollBarNode?.zPosition = 9 // zPosition to change in which layer the barra appears.
+        scrollBarNode?.alpha = 0.0
+        self.addChild(scrollBarNode!)
+    
     }
     
     func handleTap(recognizer: UITapGestureRecognizer){
@@ -85,13 +102,15 @@ class CategoryMenu: SKScene{
     func handlePan(recognizer: UIPanGestureRecognizer) {
         clearTouchHighlight()
         if recognizer.state == UIGestureRecognizerState.began {
-            //let translation = gestureRecognizer.translationInView(self.view)
+            let translation = recognizer.translation(in: self.view)
             //print ("start:\(translation.y)")
             lastScroll = 0.0
+            scrollBarNode?.isHidden = false
+            scrollBarNode?.run(SKAction.fadeAlpha(to: 0.40, duration: 0.2))
         }
         if recognizer.state == UIGestureRecognizerState.changed {
             let translation = recognizer.translation(in: self.view)
-            //print ("pan:  \(translation.y)")
+            //print ("changed:  \(translation.y)")
             // note: 'view' is optional and need to be unwrapped
             
             scrollTitles(y: translation.y - lastScroll)
@@ -99,6 +118,12 @@ class CategoryMenu: SKScene{
         }
         if recognizer.state == UIGestureRecognizerState.ended {
             scrollSpring()
+            let fadeOut1 = SKAction.fadeAlpha(to: 0.40, duration: 0.75)
+            let fadeOut2 = SKAction.fadeAlpha(to: 0.0, duration: 0.5)
+            let sequence = SKAction.sequence([fadeOut1, fadeOut2])
+            scrollBarNode?.run(sequence)
+            
+            //scrollBarNode?.isHidden = true
         }
     }
     
@@ -114,7 +139,7 @@ class CategoryMenu: SKScene{
             if (newTop < topSpring) {
                 //print ("too far down")
                 newTop = topSpring
-                moveY = lastTop - topSpring
+                moveY = newTop - lastTop
             }
         }
         if (moveY > 0) {
@@ -126,13 +151,15 @@ class CategoryMenu: SKScene{
         }
         listTop += moveY
         listBottom += moveY
-        //print ("move = \(moveY)")
+        // print ("move = \(moveY)")
         for title in titles {
             let spriteNode = title.getNode()
             spriteNode?.position.y += moveY
         }
+        scrollBarNode?.position.y = (scrollBarNode?.position.y)! - (moveY * scrollBarRatio)
     }
     func scrollSpring() {
+        // print ("spring")
         var moveY: CGFloat = 0
         if (listTop < topLimit) {
             moveY = topLimit - listTop
@@ -148,6 +175,7 @@ class CategoryMenu: SKScene{
                 let spriteNode = title.getNode()
                 spriteNode?.position.y += moveY
             }
+            scrollBarNode?.position.y = (scrollBarNode?.position.y)! - (moveY * scrollBarRatio)
         }
     }
     
@@ -158,6 +186,7 @@ class CategoryMenu: SKScene{
             spriteNode.colorBlendFactor = 0.0
         }
     }
+    
     /*
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let first = touches.first!

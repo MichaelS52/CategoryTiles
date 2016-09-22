@@ -13,6 +13,7 @@ import UIKit
 class CategoryMenu: SKScene{
     
     var titles = [TitleNode]()
+    
     var lastScroll: CGFloat = 0
     var topLimit: CGFloat = 0
     var bottomLimit: CGFloat = 0
@@ -77,6 +78,7 @@ class CategoryMenu: SKScene{
         scrollBarNode?.position = CGPoint(x: self.size.width, y: scrollY)
         scrollBarNode?.zPosition = 9 // zPosition to change in which layer the barra appears.
         scrollBarNode?.alpha = 0.0
+        scrollBarNode?.zPosition = 15.0
         self.addChild(scrollBarNode!)
     
     }
@@ -94,6 +96,7 @@ class CategoryMenu: SKScene{
             if(touchedNode.name != nil) {
                 let scene = MenuScene(fileNamed: "MenuScene")
                 scene?.initialize(touchedNode.name!)
+                print ("present menu")
                 self.view?.presentScene(scene)
             }
         }

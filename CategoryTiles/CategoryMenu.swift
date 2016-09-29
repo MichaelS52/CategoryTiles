@@ -94,10 +94,13 @@ class CategoryMenu: SKScene{
             print ("touch: \(touchLocation.x) - \(touchLocation.y)")
             print ("tap \(touchedNode.name)")
             if(touchedNode.name != nil) {
+                print ("node != nil")
                 let scene = MenuScene(fileNamed: "MenuScene")
                 scene?.initialize(touchedNode.name!)
                 print ("present menu")
                 self.view?.presentScene(scene)
+            } else {
+                print("node = nil")
             }
         }
     }

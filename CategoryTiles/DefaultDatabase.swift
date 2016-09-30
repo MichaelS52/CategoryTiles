@@ -135,7 +135,7 @@ class DefaultDatabase: NSObject {
         let gameRelation = newCat.value(forKeyPath: "game")
         var game = insertGame("Hockey", a1: "puck", a2: "goalie", a3: "stick", a4: "penalty", cat: newCat)
         (gameRelation! as AnyObject).add(game)
-        game = insertGame("Basketball", a1: "rim", a2: "rebound", a3: "zone", a4: "gaurd", cat: newCat)
+        game = insertGame("Basketball", a1: "rim", a2: "rebound", a3: "zone", a4: "guard", cat: newCat)
         (gameRelation! as AnyObject).add(game)
         
         game = insertGame("Football", a1: "snap", a2: "tackle", a3: "punt",

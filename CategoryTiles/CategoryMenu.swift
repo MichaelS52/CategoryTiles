@@ -112,6 +112,7 @@ class CategoryMenu: SKScene{
             //print ("start:\(translation.y)")
             lastScroll = 0.0
             scrollBarNode?.isHidden = false
+            scrollBarNode?.removeAllActions()
             scrollBarNode?.run(SKAction.fadeAlpha(to: 0.40, duration: 0.2))
         }
         if recognizer.state == UIGestureRecognizerState.changed {
@@ -124,6 +125,7 @@ class CategoryMenu: SKScene{
         }
         if recognizer.state == UIGestureRecognizerState.ended {
             scrollSpring()
+            scrollBarNode?.removeAllActions()
             let fadeOut1 = SKAction.fadeAlpha(to: 0.40, duration: 0.75)
             let fadeOut2 = SKAction.fadeAlpha(to: 0.0, duration: 0.5)
             let sequence = SKAction.sequence([fadeOut1, fadeOut2])
@@ -179,7 +181,11 @@ class CategoryMenu: SKScene{
             //print ("spring move = \(moveY)")
             for title in titles {
                 let spriteNode = title.getNode()
-                spriteNode?.position.y += moveY
+                // let newX = spriteNode?.position.x
+                let newY = (spriteNode?.position.y)! + moveY
+                let moveTile = SKAction.moveTo(y:newY, duration:0.05)
+                spriteNode?.run(moveTile)
+                //spriteNode?.position.y += moveY
             }
             scrollBarNode?.position.y = (scrollBarNode?.position.y)! - (moveY * scrollBarRatio)
         }
